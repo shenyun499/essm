@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>自动引入其他HTML标签</title>
+		<link rel="stylesheet" href="css/essm.css" />
+		<link rel="stylesheet" href="css/dialog.css" />
+		<!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+		<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="Content-Language" content="zh-CN" />
+		<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+	</head>
+
+	<body>
+		<div class="container">
+			<div class="include" file="header.html">需要引入的</div>
+		</div>
+
+		<div>自身部分</div>
+		<div class="include" file="footer.html">需要引入的</div>
+		<script type="text/javascript">
+			//三种不同方式引入页面，加载的文件内容写入到当前标签里面并移除当前标签<div class="include" ></div>
+			//基于ajax的get请求
+			$(".include").each(function() {
+				var file = $(this).attr("file");
+				if(!!file) {
+					var thisObj = $(this);
+					$.get(file, function(html) {
+						thisObj.after(html).remove();
+					});
+				}
+			});
+			//基于iframe请求的实现是要使用jQuery伪造一个隐藏的iframe标签出来请求文件内容，获取后移除它
+			$(".include").each(function() {
+				var file = $(this).attr("file");
+				if(!!file) {
+					var $includeObj = $(this);
+					$("<iframe style='display:none'>").attr("src", file).attr("name", file).appendTo($("body")).load(function() {
+						$includeObj.after($(window.frames[file].document).text()).remove();
+						$(this).remove();
+					});
+				}
+			});
+			//使用jQuery的load方法
+			$(".include").each(function() {
+				if(!!$(this).attr("file")) {
+					var $includeObj = $(this);
+					$(this).load($(this).attr("file"), function(html) {
+						$includeObj.after(html).remove(); //加载的文件内容写入到当前标签后面并移除当前标签
+					})
+				}
+			});
+		</script>
+	</body>
+
+</html>
