@@ -7,8 +7,15 @@ body {
 	/*去除外百边距*/
 	padding-top: 30px;
 }
-a:hover {text-decoration: none;}
-a:focus {text-transform: none;}
+
+a:hover {
+	text-decoration: none;
+}
+
+a:focus {
+	text-transform: none;
+}
+
 /*主页面按钮*/
 @media (min-width: 1200px) {
 	.container {
@@ -27,6 +34,7 @@ a:focus {text-transform: none;}
 .navbar-nav a {
 	color: white;
 }
+
 .mybtn {
 	display: block;
 	width: 130px;
@@ -73,6 +81,7 @@ a:focus {text-transform: none;}
 	margin-top: 110px;
 	padding: 15px 80px;
 	opacity: 0.9;
+	border-radius: 20px;
 }
 
 /*掌握单词*/
@@ -81,15 +90,32 @@ a:focus {text-transform: none;}
 	/* height: 37rem; */
 	margin: 0 auto;
 	background: #FFFFFF;
+	border-radius: 20px;
 }
+
 .wordsearch {
 	width: 30%;
 	padding: 0 0 1rem 1rem;
 }
-.kwcont .table {width: 96.5%; text-align: center;margin: auto;}
-.kwcont .table th {text-align: center;border-bottom: 0.18rem solid gainsboro;}
-.kwcont .table a {text-decoration: none;}
-.pagination a {text-decoration: none;}
+
+.kwcont .table {
+	width: 96.5%;
+	text-align: center;
+	margin: auto;
+}
+
+.kwcont .table th {
+	text-align: center;
+	border-bottom: 0.18rem solid gainsboro;
+}
+
+.kwcont .table a {
+	text-decoration: none;
+}
+
+.pagination a {
+	text-decoration: none;
+}
 
 /* 计划制定模块 */
 .plan_module {
@@ -106,8 +132,144 @@ a:focus {text-transform: none;}
 	border-radius: 20px;
 	border: none;
 }
+
 .plan_form {
 	width: 4rem;
 	text-indent: 1rem;
 	float: right;
+}
+
+/* 盲式学习模块 */
+.study {
+	width: 100%;
+	height: 78%;
+	background: url(../img/书.jpg) 20%;
+	margin: auto;
+	margin-top: -4%;
+	border-radius: 40px;
+}
+
+.study h3 {
+	text-align: center;
+	padding-top: 1rem;
+}
+
+.study .stu {
+	float: right;
+	margin-right: 1rem;
+	margin-top: -5px;
+}
+
+.study_cont {
+	width: 100%;
+	height: 70%;
+	margin: auto;
+	padding: 0 2rem 0 2rem;
+}
+
+.study_contd span {
+	display: block;
+	width: 100%;
+	height: 4rem;
+	line-height: 4rem;
+	text-align: center;
+	background: #FFFFFF;
+	border: 1px solid transparent;
+	border-radius: 5px;
+	font-size: 1.7rem;
+	font-weight: 400;
+}
+
+.study_contd a:hover {
+	text-decoration: none;
+}
+
+.study_contd a {
+	display: block;
+	background: #FF7256;
+	width: 100%;
+	height: 3rem;
+	line-height: 3rem;
+	text-align: center;
+	border-radius: 5px;
+	font-size: 1.2rem;
+	font-weight: 400;
+	color: white;
+}
+
+.study_cont .row {
+	margin-bottom: 1.5rem;
+}
+
+.study_contd .status {
+	display: block;
+	background: red;
+	position: relative;
+	width: 10%;
+	height: 15px;
+	line-height: 15px;
+	text-align: center;
+	left: 88%;
+	top: -100%;
+	border-radius: 7.5px;
+	font-size: 20px;
+}
+
+.study_cont_e {
+	width: 100%;
+	height: 40%;
+	margin: auto;
+	padding: 5rem 20rem 0 19rem;
+}
+
+/* 挑战接龙模块 */
+.gamechoose {
+	width: 40%;
+	height: 30%;
+	margin: auto;
+	margin-top: 10rem;
+}
+
+.gamechoose span {
+	height: 34px;
+	line-height: 34px;
+	text-align: center;
+	font-size: 15px;
+	margin-right: 5px;
+	margin-left: 40px;
+}
+
+.gamechoose a {
+	margin: 1.625rem 0 0 8.5rem;
+}
+
+.game_cont {
+	width: 100%;
+	height: 40%;
+	margin: auto;
+	padding: 2rem 25rem 0 25rem;
+}
+
+.g_status {
+	margin: 1rem 1rem 0 58.3rem;
+}
+#time {
+	width: 4.5rem;
+	height: 4.5rem;
+	line-height: 4.5rem;
+	text-align: center;
+	position: relative;
+	left: 33rem;
+	top: -1rem;
+	font-size: 3.25rem;
+	color: red;
+	border: 1px solid red;
+	border-radius: 2.25rem;
+	
+}
+/* 返回按钮 */
+.back {
+	position: relative;
+	left: 92%;
+	top: 15%;
 }

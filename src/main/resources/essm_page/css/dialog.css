@@ -19,8 +19,6 @@ a {text-decoration: none;}
 .dialog .d_content .d_input input:focus {border-color: #488ee7;}
 .dialog .d_content  .d_inputt {width: 80%;/*padding: 0 10%;*/text-align: center;position: absolute;top: 13%;margin: auto;left: 0; bottom: 0; right: 0;}
 .dialog .d_content  .d_inputd {width: 80%;/*padding: 0 10%;*/text-align: center;position: absolute;top: 35%;margin: auto;left: 0; bottom: 0; right: 0;}
-/*记住密码*/
-.dialog .d_content .d_remp {height: 18px;line-height: 18px; position: absolute;top: 57%;padding-left: 10%;color: #666;text-align: center;}
 /*登陆*/
 .dialog .d_content .d_submit {width: 80%; padding:0 10%;position:absolute; top: 57%;}
 .dialog .d_content .d_submit input {width: 100%;height: 42px;background: #3f89ec;border: none;font-size: 16px;font-weight: 800;border-radius: 3px;cursor: pointer;color: rgb(255, 255, 255);}
@@ -30,7 +28,7 @@ a {text-decoration: none;}
 .dialog .d_footer a {position: absolute;right: 10%;}
 
 /*计划状态*/
-.dialog2 {width: 290px; height: 180px;position: absolute;left: 55%;top: 65%;background: #FFFFFF;display: none;padding-top: 10px;box-shadow: 0 6px 10px 1px #000000a1;z-index: 999;letter-spacing: 2px;-moz-user-select:none;-webkit-user-select:none;user-select:none;}
+.dialog2 {width: 290px; height: 180px;position: absolute;left: 55%;top: 65%;background: #FFFFFF;display: none;padding-top: 10px;box-shadow: 0 6px 10px 1px #000000a1;z-index: 999;letter-spacing: 2px;-moz-user-select:none;-webkit-user-select:none;user-select:none;border-radius: 20px;}
 /*计划完成状态*/
 .dialog2 .con {width: 50%;margin: auto;padding-top: 10px;}
 .dialog2 .con span {color: red;}
@@ -48,8 +46,31 @@ a {text-decoration: none;}
 .dialog3 .d_content .d_close:hover {font-weight: 500;color: #6A6B6C;}
 
 /* 四大模块，模块1：计划制定 */
-.dialog4 {width: 290px;position: absolute;left: 135%;top: 240%;background: #FFFFFF;display: none;padding-top: 10px;padding-bottom: 10px; box-shadow: 0 6px 10px 1px #000000a1;z-index: 999;letter-spacing: 2px;-moz-user-select:none;-webkit-user-select:none;user-select:none;}
+.dialog4 {width: 290px;position: absolute;left: 135%;top: 210%;background: #FFFFFF;display: none;padding-top: 10px;padding-bottom: 10px; box-shadow: 0 6px 10px 1px #000000a1;z-index: 999;letter-spacing: 2px;-moz-user-select:none;-webkit-user-select:none;user-select:none;border-radius: 20px;}
 .dialog4 .con {width: 53%;margin: auto;padding-top: 10px;}
 .dialog4 .con span {color: red;}
 .dialog4 .d_close {position: absolute;width: 20px;height: 20px;right: 2%;font-size: 20px;text-align: center;color: #c1b2b2; cursor: pointer;}
 .dialog4 .d_close:hover {font-weight: 500;color: #6A6B6C;}
+
+/* 注册 */
+.dialog_re {width: 356px; height: 350px;position: absolute;left: 51.3%;top: 13.5%;background: #FFFFFF;display: block;box-shadow: 0 6px 10px 1px #000000a1;z-index: 999;-moz-user-select:none;-webkit-user-select:none;user-select:none;  }
+.dialog_re .d_header {position: relative;width: 100%;height: 15%;color: #000; cursor: move;}
+.dialog_re .d_header .d_title {position: absolute;left: 10%;top: 50%;font-size: 20px;display: inline-block;}
+.dialog_re .d_header .d_close {position: absolute;width: 20px;height: 20px;right: 2%;top: 10%;font-size: 20px;text-align: center;color: #c1b2b2; cursor: pointer;}
+.dialog_re .d_header .d_close:hover {font-weight: 500;color: #6A6B6C;}
+/*错误提示*/
+.dialog_re .d_content {width: 100%; height: 70%;position: relative;}
+.dialog_re .d_content .d_tip {position: absolute; left: 10%; top: 3%;}
+/*输入内容*/
+.dialog_re .d_content .d_input input {width: 100%;height: 38px;text-indent: 1em;border: 1px solid #ddd;color: #666;outline: none;}
+.dialog_re .d_content .d_input input:focus {border-color: #488ee7;}
+.dialog_re .d_content  .d_inputt {width: 80%;/*padding: 0 10%;*/text-align: center;position: absolute;top: 13%;margin: auto;left: 0; bottom: 0; right: 0;}
+.dialog_re .d_content  .d_inputd {width: 80%;/*padding: 0 10%;*/text-align: center;position: absolute;top: 30%;margin: auto;left: 0; bottom: 0; right: 0;}
+.dialog_re .d_content  .d_inpute {width: 80%;/*padding: 0 10%;*/text-align: center;position: absolute;top: 47%;margin: auto;left: 0; bottom: 0; right: 0;}
+.dialog_re .d_content  .d_inputy {width: 80%;/*padding: 0 10%;*/text-align: center;position: absolute;top: 64%;margin: auto;left: 0; bottom: 0; right: 0;}
+.dialog_re .d_content .d_submit {width: 80%; padding:0 10%;position:absolute; top: 81%;}
+.dialog_re .d_content .d_submit input {width: 100%;height: 42px;background: #3f89ec;border: none;font-size: 16px;font-weight: 800;border-radius: 3px;cursor: pointer;color: rgb(255, 255, 255);}
+
+/*结束*/
+.dialog_re .d_footer {height: 15%;line-height: 55px;position: relative;background: #F0F6FF;font-size: 14px; color: #2e82ff;padding: 0 28px;}
+.dialog_re .d_footer a {position: absolute;right: 10%;}

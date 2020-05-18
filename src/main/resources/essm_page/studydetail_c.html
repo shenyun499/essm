@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>易学习平台</title>
+		<title>盲式中文学习</title>
 		<link rel="stylesheet" href="css/essm.css" />
 		<link rel="stylesheet" href="css/dialog.css" />
 		<!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
@@ -26,25 +26,39 @@
 				<p></p>
 				<br />
 			</div>
-			<div class="row">
-				<div class="col-md-3">
-					<a href="planmodule.html" class="mybtn">制<br/>定<br/>计<br/>划</a>
+			<div class="study">
+				<h3>盲式中文学习</h3>
+				<a href="studymodule.html" class="btn btn-info stu">记录并退出</a>
+				<p style="font-size: 18px;margin-left: 1rem;">单词总数: 9</p>
+				<div class="study_cont">
+					<div class="include" file="words.html">单词翻译模块内容</div>
 				</div>
-				<div class="col-md-3">
-					<a href="studymodule.html" class="mybtn">盲<br/>式<br/>学<br/>习</a>
-				</div>
-				<div class="col-md-3">
-					<a href="gamemodule.html" class="mybtn">挑<br/>战<br/>接<br/>龙</a>
-				</div>
-				<div class="col-md-3">
-					<a href="testwords_s.html" class="mybtn">测<br/>测<br/>实<br/>力</a>
-				</div>
+				<!-- 分页 -->
+				<nav aria-label="Page navigation">
+					<ul class="pagination" style="padding-left: 1rem;margin-top: 1rem;font-size: 18px;color: white;">
+						<span>3/7页</span>
+						<a href="#" style="text-decoration: none;"  class="btn	btn-default">首页</a>
+						<a href="#"  style="text-decoration: none;" class="btn 	btn-default">上一页</a>
+						<a href="#"  style="text-decoration: none;" class="btn 	btn-default">下一页</a>
+						<a href="#"  style="text-decoration: none;" class="btn 	btn-default">尾页</a> 
+					</ul>
+				</nav>
 			</div>
-
+		
 		</div>
-
+		
 		<!--登录-->
 		<div class="include" file="login.html"></div>
+		<script>
+			/* 翻译 */
+			$('body').delegate('.c_e', 'click', function() {
+				if ($(this).text() == '中文') {
+					$(this).text("xxx中文");
+				} else {
+					$(this).text("中文");
+				}
+			});
+		</script>
 	</body>
 
 </html>
