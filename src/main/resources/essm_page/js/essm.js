@@ -1,72 +1,26 @@
 $(function() {
-	/*添加单词*/
-	$('body').delegate('#aform', 'submit', function() {
-		if ($('#english').val() == "") {
-			alert('单词英文输入不能为空！');
-			return false;
-		}
-		if ($('#chinese').val() == "") {
-			alert('单词中文输入不能为空！');
-			return false;
-		}
-		alert('添加成功！');
-		return true;
-	});
-	
-	/*格式化个人库*/
-	$('body').delegate('#clearall', 'click', function() {
-		alert("这是格式化个人库操作！！！");
-		$('#screen').show();
-		$('#dialog3').show();
-	});
-
-	$('body').delegate('#password2', 'blur', function() {
-		if($('#password2').val() == "") {
-			$('#d_tip2').text("请输入密码");
-			$('#d_tip2').css('color', 'red');
-		} else {
-			$('#d_tip2').text("");
+	//使用jQuery的load方法，将页面加载进来
+	$(".include").each(function() {
+		if(!!$(this).attr("file")) {
+			var $includeObj = $(this);
+			$(this).load($(this).attr("file"), function(html) {
+				$includeObj.after(html).remove(); //加载的文件内容写入到当前标签后面并移除当前标签
+			})
 		}
 	});
 	
-	$('body').delegate('#pform', 'submit', function() {
-		if($('#password2').val() == "") {
-			$('#d_tip2').text("请输入密码");
-			$('#d_tip2').css('color', 'red');
-			alert('密码不能为空！');
-			return false;
-		} else {
-			/*ajax查询密码，正确则格式化成功*/
-			alert('格式化成功！');
-			return true;
+	/*计划状态*/
+	$('body').delegate('#schedule', 'click', function() {
+		if ($('#screen').css('display') == 'none') {
+			$('#screen').show();
+			$('#dialog2').show();
 		}
 	});
-
-	$('body').delegate('#d_close2', 'click', function() {
-		$('#screen').hide();
-		$('#dialog3').hide();
+	$('body').click(function(event) {
+		var evt = event.srcElement ? event.srcElement : event.target;
+		if ($('#dialog2').css('display') != 'none' && evt.id == 'screen') {
+			$('#screen').hide();
+			$('#dialog2').hide();
+		}
 	});
-	
-	/* 今日计划制定 */
-	$('body').delegate('#pto', 'click', function() {
-		$('#screen').show();
-		$('#dialog4').show();
-	});
-	
-	$('body').delegate('#d_close3', 'click', function() {
-		$('#screen').hide();
-		$('#dialog4').hide();
-	});
-	
-	/* 明日计划制定 */
-	$('body').delegate('#pmo', 'click', function() {
-		$('#screen').show();
-		$('#dialog5').show();
-	});
-	
-	$('body').delegate('#d_close4', 'click', function() {
-		$('#screen').hide();
-		$('#dialog5').hide();
-	});
-
 })
