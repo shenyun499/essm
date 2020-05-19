@@ -1,5 +1,6 @@
 package com.essm.controller;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -8,10 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
  * @Author xuexue
  * @Date 2020/4/25 11:20
  */
-@RestController
+@Controller
 public class TestController {
-    @RequestMapping(value = "/")
+    @RequestMapping(value = "/aa")
     public String test() {
-        return "hello";
+        return "index";
     }
 }
