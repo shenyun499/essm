@@ -17,8 +17,25 @@ public class EssmMvcConfig implements WebMvcConfigurer {
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/essm.html").setViewName("index");
         registry.addViewController("/essm").setViewName("index");
+
+        /*引入页面跳转*/
         registry.addViewController("/schedule.html").setViewName("schedule");
         registry.addViewController("/login.html").setViewName("login");
         registry.addViewController("/header.html").setViewName("header");
+
+        /*学习模块页面跳转*/
+        registry.addViewController("/planmodule.html").setViewName("planmodule");
+        registry.addViewController("/studymodule.html").setViewName("studymodule");
+        registry.addViewController("/gamemodule.html").setViewName("gamemodule");
+        registry.addViewController("/testwords_s.html").setViewName("testwords_s");
+
+        /*导航栏页面跳转*/
+        registry.addViewController("/plibrary.html").setViewName("plibrary");
+        registry.addViewController("/knowwords.html").setViewName("knowwords");
+        registry.addViewController("/unknowwords.html").setViewName("unknowwords");
+        registry.addViewController("/introduction.html").setViewName("introduction");
+
+        /*个人库页面跳转*/
+        registry.addViewController("/addword.html").setViewName("addword");
     }
 }

@@ -78,7 +78,7 @@ a:focus {
 	width: 55%;
 	background: #90B12A;
 	margin: 0 auto;
-	margin-top: 110px;
+	margin-top: 20px;
 	padding: 15px 80px;
 	opacity: 0.9;
 	border-radius: 20px;
@@ -143,7 +143,7 @@ a:focus {
 .study {
 	width: 100%;
 	height: 78%;
-	background: url(../img/书.jpg) 20%;
+	background: url(../img/book.jpg) 20%;
 	margin: auto;
 	margin-top: -4%;
 	border-radius: 40px;

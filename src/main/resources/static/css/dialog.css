@@ -74,3 +74,16 @@ a {text-decoration: none;}
 /*结束*/
 .dialog_re .d_footer {height: 15%;line-height: 55px;position: relative;background: #F0F6FF;font-size: 14px; color: #2e82ff;padding: 0 28px;}
 .dialog_re .d_footer a {position: absolute;right: 10%;}
+
+/* 更新单词操作 */
+.up_word {position: absolute;display: none;left: 35%;top: 35%;width: 29%;background: #90B12A;margin: 0 auto;margin-top: 20px;padding: 15px 80px;opacity: 0.9;border-radius: 20px;z-index: 999;}
+.up_word .d_close {position: absolute;width: 20px;height: 20px;right: 3%;top: 3%;font-size: 20px;text-align: center;color: red; cursor: pointer;}
+.up_word .d_close:hover {font-weight: 500;color: #6A6B6C;}
+
+/*删除单词操作*/
+.de_word {width: 290px; height: 180px;position: absolute;left: 41%;top: 40%;background: #FFFFFF;display: none;padding-top: 10px;box-shadow: 0 6px 10px 1px #000000a1;z-index: 999;letter-spacing: 2px;-moz-user-select:none;-webkit-user-select:none;user-select:none;}
+.de_word .d_content .d_submit {width: 50%; padding:0 10%;position:absolute; top: 65%;}
+.de_word .d_content .d_submit input {margin-left: 65px; width: 100%;height: 42px;background: #3f89ec;border: none;font-size: 16px;font-weight: 800;border-radius: 3px;cursor: pointer;color: rgb(255, 255, 255);}
+.de_word .d_content {width: 100%; height: 100%;position: relative;}
+.de_word .d_content .d_close {position: absolute;width: 20px;height: 20px;right: 2%;font-size: 20px;text-align: center;color: #c1b2b2; cursor: pointer;}
+.de_word .d_content .d_close:hover {font-weight: 500;color: #6A6B6C;}
