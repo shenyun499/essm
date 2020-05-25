@@ -31,7 +31,34 @@ $(function() {
 			alert("密码不能为空！");
 			return false;
 		}
-		return true;
+		$.ajax({
+			url: "/login",
+			type: "POST",
+			data:{
+				username: $('#username').val(),
+				password: $('#password').val()
+			},
+			dataType: "json",
+			success: function(data, status){
+				var result = data["status"]; //数组
+				if (result == 1) {
+					console.log($.cookie("u_cookie"));
+					console.log($.cookie("cookie"));
+					$('#screen').hide();
+					$('#dialog').hide();
+					$('#btn').css("display","none");
+					$('#btn_user').text($.cookie("u_cookie"));
+					$('#btn_user').css("display","inline");
+				} else if (result == 2) {
+					$('#d_tip').text("用户名或者密码错误!");
+					$('#d_tip').css('color', 'red');
+				}
+			},
+			error: function(data, status){
+				alert("数据错误！");
+			}
+		});
+		return false;
 	});
 	//禁止选中对话框内容
 	if (document.attachEvent) { //ie的事件监听，拖拽div时禁止选中内容，firefox与chrome已在css中设置过-moz-user-select: none; -webkit-user-select: none;
@@ -62,7 +89,7 @@ $(function() {
 			$('#dialog').css('top', top);
 		}
 	});
-	
+
 	/* 注册实现 */
 	$('body').delegate('#reg', 'click', function() {
 		left = '51.3%';
@@ -132,7 +159,7 @@ $(function() {
 	$('body').delegate('#h_reg', 'mouseup', function(event) {
 		isCanMove = false;
 	});
-	
+
 	/*鼠标移动*/
 	$('body').delegate(document, 'mousemove', function(event) {
 		if (isCanMove) {
@@ -142,7 +169,7 @@ $(function() {
 			$('#dialog_re').css('top', top);
 		}
 	});
-	
+
 
 	function checkDataU() {
 		if ($('#username').val() == "") {
@@ -167,7 +194,7 @@ $(function() {
 			return true;
 		}
 	};
-	
+
 	function checkRDataU() {
 		if ($('#r_username').val() == "") {
 			console.log('');
@@ -179,7 +206,7 @@ $(function() {
 			return true;
 		}
 	};
-	
+
 	function checkRDataP() {
 		if ($('#r_password').val() == "") {
 			console.log('');
@@ -191,7 +218,7 @@ $(function() {
 			return true;
 		}
 	};
-	
+
 	function checkRDataE() {
 		if ($('#email').val() == "") {
 			console.log('');
@@ -203,7 +230,7 @@ $(function() {
 			return true;
 		}
 	};
-	
+
 	function checkRDataY() {
 		if ($('#checknum').val() == "") {
 			console.log('');
@@ -215,4 +242,29 @@ $(function() {
 			return true;
 		}
 	};
+
+	//使用jQuery的load方法，将页面加载进来
+	$(".include").each(function() {
+		if(!!$(this).attr("file")) {
+			var $includeObj = $(this);
+			$(this).load($(this).attr("file"), function(html) {
+				$includeObj.after(html).remove(); //加载的文件内容写入到当前标签后面并移除当前标签
+			})
+		}
+	});
+
+	/*计划状态*/
+	$('body').delegate('#schedule', 'click', function() {
+		if ($('#screen').css('display') == 'none') {
+			$('#screen').show();
+			$('#dialog2').show();
+		}
+	});
+	$('body').click(function(event) {
+		var evt = event.srcElement ? event.srcElement : event.target;
+		if ($('#dialog2').css('display') != 'none' && evt.id == 'screen') {
+			$('#screen').hide();
+			$('#dialog2').hide();
+		}
+	});
 })

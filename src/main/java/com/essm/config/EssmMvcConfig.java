@@ -1,6 +1,9 @@
 package com.essm.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -37,5 +40,26 @@ public class EssmMvcConfig implements WebMvcConfigurer {
 
         /*个人库页面跳转*/
         registry.addViewController("/addword.html").setViewName("addword");
+    }
+
+    /**
+     * 登录拦截器
+     *
+     * @param registry
+     */
+    public void addInterceptors(InterceptorRegistry registry) {
+        String[] excludes = new String[]{"/login.html", "/essm", "/header.html", "/essm.html", "/static/**"};
+        registry.addInterceptor(new MyInterceptor()).
+                addPathPatterns("/**").
+                excludePathPatterns(excludes);
+    }
+
+    /**
+     * 添加静态资源文件，外部可以直接访问地址
+     *
+     * @param registry
+     */
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
     }
 }
