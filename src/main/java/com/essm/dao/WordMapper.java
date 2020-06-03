@@ -2,6 +2,7 @@ package com.essm.dao;
 
 import com.essm.entity.Word;
 import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -39,6 +40,15 @@ public interface WordMapper {
     List<Word> queryAll(Word word);
 
     /**
+     * 通过用户id和单词熟练度sign查询所有的word
+     *
+     * @param userId 用户id
+     * @param sign 单词熟练状态 1为掌握 2为不掌握
+     * @return
+     */
+    List<Word> queryAllByUserIdAndSign(Integer userId, Integer sign);
+
+    /**
      * 新增数据
      *
      * @param word 实例对象
@@ -62,4 +72,17 @@ public interface WordMapper {
      */
     int deleteById(Integer id);
 
+    /**
+     * 将单词置为掌握状态
+     *
+     * @param id 单词id
+     */
+    void addWordKnow(Integer id);
+
+    /**
+     * 将单词置为未掌握状态
+     *
+     * @param id 单词id
+     */
+    void removeWordKnow(Integer id);
 }

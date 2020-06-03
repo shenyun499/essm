@@ -2,6 +2,7 @@ package com.essm.config;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,12 +25,16 @@ public class MyInterceptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        Object obj = request.getSession().getAttribute("essm");
-        /*if (obj == null) {
-            //request.getRequestDispatcher("/essm").forward(request, response);
-            //response.sendRedirect(request.getContextPath() + "/essm");
+        Cookie[] cookies = request.getCookies();
+        if (cookies == null) {
             return false;
-        }*/
-        return true;
+        } else {
+            for (Cookie cookie : cookies) {
+                if ("userid".equals(cookie.getName())) {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

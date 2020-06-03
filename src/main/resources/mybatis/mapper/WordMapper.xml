@@ -50,6 +50,14 @@
         </where>
     </select>
 
+    <!--通过用户id查询所有单词-->
+    <select id="queryAllByUserIdAndSign" resultMap="WordMap">
+        select
+          id, pid, chinese, english, sign
+        from essm_word
+        where pid = #{userId} and sign = #{sign}
+    </select>
+
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         insert into essm.essm_word(pid, chinese, english, sign)

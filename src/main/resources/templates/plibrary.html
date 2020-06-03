@@ -13,14 +13,14 @@
 		<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
 		<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+		<script type="text/javascript" src="js/jquery.cookie.js" th:src="@{/static/js/jquery.cookie.js}"></script>
 		<script type="text/javascript" src="js/dialog.js" th:src="@{/static/js/dialog.js}"></script>
-		<script type="text/javascript" src="js/essm.js" th:src="@{/static/js/essm.js}"></script>
 	</head>
 
 	<body>
 		<div class="container">
 			<!--引入页面导航栏-->
-			<div class="include" file="header.html">导航栏</div>
+			<div class="header">导航栏</div>
 			<div class="row">
 				<div class="col-md-3">
 					<a href="javascript: void(0);" class="navbar-brand navbar-link" id="schedule" style="font-size:18px;color: white;">计划状态</a>
@@ -37,7 +37,18 @@
 				<div class="col-md-2"><a href="unknowwords.html" class="p_a">未掌握单词</a></div>
 				<div class="col-md-2"><a href="javascript:void(0);" id="clearall" class="p_a">格式化</a></div>
 				<div class="col-md-2"></div>
-				
+				<!--确定删除个人库-->
+				<div class="dialog3" id="dialog3">
+					<div class="d_content" id="d_content2">
+						<form action="index.html" method="post" id="pform">
+							<span class="d_close" id="d_close2">X</span>
+							<p style="font-size: 25px;text-align: center;">格式化操作</p>
+							<span class="d_tip" id="d_tip2"></span>
+							<div class="d_input d_inputd"><input type="password" name="password" id="password2" value="" placeholder="密码" /></div>
+							<div class="d_submit"><input type="submit" name="submit" id="submit2" value="确认" /></div>
+						</form>
+					</div>
+				</div>
 			</div>
 		</div>
 

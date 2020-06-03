@@ -1,5 +1,26 @@
 $(function() {
-	/*弹出登陆框*/
+	//使用jQuery的load方法，将页面加载进来
+	$(".include").each(function() {
+		if(!!$(this).attr("file")) {
+			var $includeObj = $(this);
+			$(this).load("/" + $(this).attr("file"), function(html) {
+				$includeObj.after(html).remove(); //加载的文件内容写入到当前标签后面并移除当前标签
+			})
+		}
+	});
+
+
+	//利用load的回调函数实现用户在线监测
+	$(".header").load("/header.html", function () {
+		if ($.cookie("userid") != null) {
+			$('#btn').css("display","none");
+			$('#user_btn').text($.cookie("username"));
+			$('#user_btn').css("display","inline");
+		}
+	});
+
+
+	//登录框操作模块
 	//delegate 可以动态的补抓用js生成的标签
 	$('body').delegate('#btn', 'click', function() {
 		left = '51.3%';
@@ -14,12 +35,14 @@ $(function() {
 		$('#screen').hide();
 		$('#dialog').hide();
 	});
+	//登录表单校验
 	$('body').delegate('#username', 'blur', function() {
 		checkDataU();
 	});
 	$('body').delegate('#password', 'blur', function() {
 		checkDataP();
 	});
+	//ajax异步登录
 	$('body').delegate('#lform', 'submit', function() {
 		var c1 = checkDataU();
 		if (!c1) {
@@ -42,20 +65,21 @@ $(function() {
 			success: function(data, status){
 				var result = data["status"]; //数组
 				if (result == 1) {
-					console.log($.cookie("u_cookie"));
-					console.log($.cookie("cookie"));
 					$('#screen').hide();
 					$('#dialog').hide();
 					$('#btn').css("display","none");
-					$('#btn_user').text($.cookie("u_cookie"));
-					$('#btn_user').css("display","inline");
+					$('#user_btn').text($.cookie("username"));
+					$('#user_btn').css("display","inline");
+					alert("登录成功");
 				} else if (result == 2) {
 					$('#d_tip').text("用户名或者密码错误!");
 					$('#d_tip').css('color', 'red');
 				}
 			},
 			error: function(data, status){
-				alert("数据错误！");
+				$('#screen').hide();
+				$('#dialog').hide();
+				alert("数据错误，多次重试失败后，请联系管理员！");
 			}
 		});
 		return false;
@@ -90,7 +114,7 @@ $(function() {
 		}
 	});
 
-	/* 注册实现 */
+	//注册实现
 	$('body').delegate('#reg', 'click', function() {
 		left = '51.3%';
 		top = '13.5%';
@@ -171,91 +195,56 @@ $(function() {
 	});
 
 
-	function checkDataU() {
-		if ($('#username').val() == "") {
-			console.log('');
-			$('#d_tip').text("请输入用户名");
-			$('#d_tip').css('color', 'red');
-			return false;
-		} else {
-			$('#d_tip').text("");
-			return true;
-		}
-	};
-
-	function checkDataP() {
-		if ($('#password').val() == "") {
-			console.log('');
-			$('#d_tip').text("请输入密码");
-			$('#d_tip').css('color', 'red');
-			return false;
-		} else {
-			$('#d_tip').text("");
-			return true;
-		}
-	};
-
-	function checkRDataU() {
-		if ($('#r_username').val() == "") {
-			console.log('');
-			$('#t_reg').text("请输入用户名");
-			$('#t_reg').css('color', 'red');
-			return false;
-		} else {
-			$('#t_reg').text("");
-			return true;
-		}
-	};
-
-	function checkRDataP() {
-		if ($('#r_password').val() == "") {
-			console.log('');
-			$('#t_reg').text("请输入密码");
-			$('#t_reg').css('color', 'red');
-			return false;
-		} else {
-			$('#t_reg').text("");
-			return true;
-		}
-	};
-
-	function checkRDataE() {
-		if ($('#email').val() == "") {
-			console.log('');
-			$('#t_reg').text("请输入邮箱");
-			$('#t_reg').css('color', 'red');
-			return false;
-		} else {
-			$('#t_reg').text("");
-			return true;
-		}
-	};
-
-	function checkRDataY() {
-		if ($('#checknum').val() == "") {
-			console.log('');
-			$('#t_reg').text("请输入验证码");
-			$('#t_reg').css('color', 'red');
-			return false;
-		} else {
-			$('#t_reg').text("");
-			return true;
-		}
-	};
-
-	//使用jQuery的load方法，将页面加载进来
-	$(".include").each(function() {
-		if(!!$(this).attr("file")) {
-			var $includeObj = $(this);
-			$(this).load($(this).attr("file"), function(html) {
-				$includeObj.after(html).remove(); //加载的文件内容写入到当前标签后面并移除当前标签
-			})
-		}
+	//退出登录
+	$('body').delegate('#user_btn', 'click', function() {
+		$("#screen").show();
+		$("#exit").show();
+	});
+	$('body').delegate('#close_ex', 'click', function() {
+		$("#screen").hide();
+		$("#exit").hide();
+	});
+	$('body').delegate("#exit_form", 'submit', function() {
+		$.ajax({
+			url: "/exit",
+			type: "POST",
+			dataType: "text",
+			success: function (data, status) {
+				alert("退出成功");
+				$('#btn').css("display","inline");
+				$('#user_btn').css("display","none");
+			},
+			error: function () {
+				alert("退出异常，多次重试失败后，请联系管理员！");
+			}
+		});
+		$("#screen").hide();
+		$("#exit").hide();
+		return false;
 	});
 
-	/*计划状态*/
+
+	//计划状态
 	$('body').delegate('#schedule', 'click', function() {
 		if ($('#screen').css('display') == 'none') {
+			$.ajax({
+				url: "/plain/status",
+				type: "POST",
+				dataType: "json",
+				data: {
+					sign: "1"
+				},
+				success: function (data) {
+					$("#aws").text(data["addWordNums"] + "/" + data["addWordNum"]);
+					$("#kws").text(data["knowWordNums"] + "/" + data["knowWordNum"]);
+					$("#sws").text(data["studyNums"] + "/" + data["studyNum"]);
+					$("#gws").text(data["gameNums"] + "/" + data["gameNum"]);
+				},
+				error: function (status) {
+					$("#plainst").hide();
+					$("#noplain").show();
+				}
+			});
 			$('#screen').show();
 			$('#dialog2').show();
 		}
@@ -267,4 +256,78 @@ $(function() {
 			$('#dialog2').hide();
 		}
 	});
+
 })
+
+function checkDataU() {
+	if ($('#username').val() == "") {
+		console.log('');
+		$('#d_tip').text("请输入用户名");
+		$('#d_tip').css('color', 'red');
+		return false;
+	} else {
+		$('#d_tip').text("");
+		return true;
+	}
+};
+
+/*表单校验函数*/
+function checkDataP() {
+	if ($('#password').val() == "") {
+		console.log('');
+		$('#d_tip').text("请输入密码");
+		$('#d_tip').css('color', 'red');
+		return false;
+	} else {
+		$('#d_tip').text("");
+		return true;
+	}
+};
+
+function checkRDataU() {
+	if ($('#r_username').val() == "") {
+		console.log('');
+		$('#t_reg').text("请输入用户名");
+		$('#t_reg').css('color', 'red');
+		return false;
+	} else {
+		$('#t_reg').text("");
+		return true;
+	}
+};
+
+function checkRDataP() {
+	if ($('#r_password').val() == "") {
+		console.log('');
+		$('#t_reg').text("请输入密码");
+		$('#t_reg').css('color', 'red');
+		return false;
+	} else {
+		$('#t_reg').text("");
+		return true;
+	}
+};
+
+function checkRDataE() {
+	if ($('#email').val() == "") {
+		console.log('');
+		$('#t_reg').text("请输入邮箱");
+		$('#t_reg').css('color', 'red');
+		return false;
+	} else {
+		$('#t_reg').text("");
+		return true;
+	}
+};
+
+function checkRDataY() {
+	if ($('#checknum').val() == "") {
+		console.log('');
+		$('#t_reg').text("请输入验证码");
+		$('#t_reg').css('color', 'red');
+		return false;
+	} else {
+		$('#t_reg').text("");
+		return true;
+	}
+};

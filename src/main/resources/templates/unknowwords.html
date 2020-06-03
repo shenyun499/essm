@@ -13,16 +13,16 @@
 		<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
 		<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+		<script type="text/javascript" src="js/jquery.cookie.js" th:src="@{/static/js/jquery.cookie.js}"></script>
 		<script type="text/javascript" src="js/dialog.js" th:src="@{/static/js/dialog.js}"></script>
-		<script type="text/javascript" src="js/essm.js" th:src="@{/static/js/essm.js}"></script>
 	</head>
 
 	<body>
 		<div class="container">
-			<div class="include" file="header.html">导航栏</div>
+			<div class="header">导航栏</div>
 			<div class="row">
 				<div class="col-md-3">
-					<a href="#" class="navbar-brand navbar-link" id="schedule" style="font-size:18px;color: white;">计划状态</a>
+					<a href="javascript:void(0);" class="navbar-brand navbar-link" id="schedule" style="font-size:18px;color: white;">计划状态</a>
 					<div class="include" file="schedule.html">计划状态</div>
 				</div>
 				<p></p>
@@ -34,12 +34,14 @@
 					<p style="color: black;font-size: 25px;text-align: center;padding-top: 1rem;margin-bottom: 0;color: #000;letter-spacing: 0.5rem;">未掌握单词库</p>
 
 					<!-- 单词查询搜索框 -->
-					<div class="input-group wordsearch">
-						<input type="text" class="form-control" placeholder="search for word">
-						<span class="input-group-btn">
-							<button class="btn btn-default" type="button">查询</button>
-						</span>
-					</div>
+					<form action="/ukwords/search/1" method="post">
+						<div class="input-group wordsearch">
+							<input type="text" class="form-control" placeholder="search for word" name="english">
+							<span class="input-group-btn">
+								<button class="btn btn-default" type="submit">查询</button>
+							</span>
+						</div>
+					</form>
 
 					<!-- 非掌握库表单 -->
 					<table class="table table-bordered table-hover table-condensed">
@@ -50,83 +52,60 @@
 							<th>状态操作</th>
 							<th>其它操作</th>
 						</tr>
-						<tr>
-							<td>1</td>
-							<td>line</td>
-							<td>线</td>
-							<td><a href="#">置为掌握</a></td>
-							<td><a href="#" id="u_word2">修改</a> | <a href="#" id="d_word2">删除</a></td>
-						</tr>
-						<tr>
-							<td>2</td>
-							<td>computer</td>
-							<td>电脑</td>
-							<td><a href="#">置为掌握</a></td>
-							<td><a href="#">修改</a> | <a href="#">删除</a></td>
-						</tr>
-						<tr>
-							<td>3</td>
-							<td>water</td>
-							<td>水</td>
-							<td><a href="#">置为掌握</a></td>
-							<td><a href="#">修改</a> | <a href="#">删除</a></td>
-						</tr>
-						<tr>
-							<td>4</td>
-							<td>head</td>
-							<td>头</td>
-							<td><a href="#">置为掌握</a></td>
-							<td><a href="#">修改</a> | <a href="#">删除</a></td>
-						</tr>
-						<tr>
-							<td>5</td>
-							<td>oringe</td>
-							<td>橙子</td>
-							<td><a href="#">置为掌握</a></td>
-							<td><a href="#">修改</a> | <a href="#">删除</a></td>
-						</tr>
-						<tr>
-							<td>6</td>
-							<td>lovely</td>
-							<td>可爱的</td>
-							<td><a href="#">置为掌握</a></td>
-							<td><a href="#">修改</a> | <a href="#">删除</a></td>
-						</tr>
-						<tr>
-							<td>7</td>
-							<td>lucky</td>
-							<td>好运的</td>
-							<td><a href="#">置为掌握</a></td>
-							<td><a href="#">修改</a> | <a href="#">删除</a></td>
-						</tr>
-						<tr>
-							<td>8</td>
-							<td>bad</td>
-							<td>坏的</td>
-							<td><a href="#">置为掌握</a></td>
-							<td><a href="#">修改</a> | <a href="#">删除</a></td>
-						</tr>
-						<tr>
-							<td>9</td>
-							<td>people</td>
-							<td>人</td>
-							<td><a href="#">置为掌握</a></td>
-							<td><a href="#">修改</a> | <a href="#">删除</a></td>
+						<tr th:each="word, wordStat: ${words.list}">
+							<td th:text="${wordStat.count}">1</td>
+							<td th:text="${word.english}">dog</td>
+							<td th:text="${word.chinese}">狗</td>
+							<td><a href="#"  th:href="@{/addKnow(id=${word.id},pageNum=${words.pageNum})}" id="addKnow">加入掌握</a></td>
+							<td>
+								<a href="javascript:void(0);" class="u_word2" th:id="${word.id}">修改</a> | <a href="javascript:void(0);" th:attr="del_uri=@{/word/} + ${word.id}" class="d_word2">删除</a>
+							</td>
 						</tr>
 					</table>
+
+					<!-- 修改框 -->
+					<div class="up_word">
+						<span class="d_close" id="close_up2">X</span>
+						<p style="color: white;font-size: 25px;text-align: center;">修改单词</p>
+						<form class="form-inline" method="post" action="#" th:action="@{/word}">
+							<input type="hidden" value="put" name="_method">
+							<input type="hidden" value="" name="id" id="2id">
+							<input type="hidden" value="2" name="sign">
+							<div class="form-group">
+								<input type="text" class="form-control input-lg" value="" placeholder="English" name="english" id="enginput2">
+							</div><br /><br />
+							<div class="form-group">
+								<input type="text" class="form-control input-lg" value="" placeholder="Chinese" name="chinese" id="chininput2">
+							</div><br /><br />
+							<input type="submit" class="btn btn-default btn-lg" value="修改"></input>
+						</form>
+					</div>
+
+					<!-- 删除框 -->
+					<div class="de_word" id="deuk_word">
+						<div class="d_content">
+							<form action="#" method="post" id="deuk_form">
+								<span class="d_close" id="close_de2">X</span>
+								<p style="font-size: 25px;text-align: center;">删除操作</p>
+								<input type="hidden" value="delete" name="_method">
+								<input type="hidden" value="2" name="sign">
+								<div class="d_submit"><input type="submit" name="submit" value="确认"></div>
+							</form>
+						</div>
+					</div>
 
 					<!-- 分页 -->
 					<nav aria-label="Page navigation">
 						<ul class="pagination" style="padding-left: 1.03rem;margin-top: 1rem;">
 							[
-							<a href="#" style="text-decoration: none;">首页</a>
-							<a href="#"  style="text-decoration: none;">上一页</a>
-							<a href="#"  style="text-decoration: none;">下一页</a>
-							<a href="#"  style="text-decoration: none;">尾页</a> 
+							<a href="#" th:href="@{1}" style="text-decoration: none;">首页</a>
+							<a href="#" th:href="@{${words.pageNum == 1 ? 1 : words.pageNum-1}}"  style="text-decoration: none;">上一页</a>
+							<a href="#" th:href="@{${words.pageNum == words.pages ? words.pages : words.pageNum+1}}" style="text-decoration: none;">下一页</a>
+							<a href="#" th:href="@{${words.pages}}" style="text-decoration: none;">尾页</a>
 							]
-							<span>第1页,</span>
-							<span>共3页,</span>
-							<span>单词总数: 25</span>
+							<span>第[[${words.pageNum}]]页,</span>
+							<span>共[[${words.pages}]]页,</span>
+							<span>单词总数: [[${words.total}]]</span>
 						</ul>
 					</nav>
 
@@ -135,42 +114,26 @@
 
 		</div>
 
-		<!-- 修改框 -->
-		<div class="up_word">
-			<span class="d_close" id="close_up2">X</span>
-			<p style="color: white;font-size: 25px;text-align: center;">修改单词</p>
-			<form class="form-inline" method="post" action="#" id="aform">
-				<div class="form-group">
-					<!--<label class="sr-only" for="exampleInputEmail3">English</label>-->
-					<input type="text" class="form-control input-lg" value="" id="english" placeholder="English">
-				</div>
-				<br /><br />
-				<div class="form-group">
-					<!--<label class="sr-only" for="exampleInputPassword3">Chinese</label>-->
-					<input type="text" class="form-control input-lg" value="" id="chinese" placeholder="Chinese">
-				</div>
-				<br /><br />
-				<input type="submit" class="btn btn-default btn-lg" value="修改"></input>
-			</form>
-		</div>
-
-		<!-- 删除框 -->
-		<div class="de_word" id="de_word">
-			<div class="d_content">
-				<form action="#" method="post" id="de_form2">
-					<span class="d_close" id="close_de2">X</span>
-					<p style="font-size: 25px;text-align: center;">删除操作</p>
-					<div class="d_submit"><input type="submit" name="submit" id="de_submit2" value="确认" /></div>
-				</form>
-			</div>
-		</div>
-
 		<!--登录-->
 		<div class="include" file="login.html"></div>
 
 		<script>
-			/* 修改 */
-			$("#u_word2").click(function() {
+			/* 修改 ajax获取信息*/
+			$(".u_word2").click(function() {
+				$.ajax({
+					url:"/word/" + $(this).attr('id'),
+					type: "post",
+					dataType: "json",
+					success: function (data, status) {
+						$("#enginput2").attr("value", data["english"]);
+						$("#chininput2").attr("value", data["chinese"]);
+						$("#2id").attr("value", data["id"]);
+					},
+					error: function () {
+
+					}
+				});
+
 				$("#screen").show();
 				$(".up_word").show();
 				/*反填信息*/
@@ -181,15 +144,22 @@
 			});
 
 			/* 删除 */
-			$("#d_word2").click(function() {
+			$(".d_word2").click(function() {
 				$("#screen").show();
-				$("#de_word").show();
+				$("#deuk_word").show();
+				$("#deuk_form").attr("action", $(this).attr('del_uri'));
 				/*反填信息*/
+			});
+			$("#deuk_form").submit(function () {
+				alert("删除成功");
 			});
 			$("#close_de2").click(function() {
 				$("#screen").hide();
-				$("#de_word").hide();
+				$("#deuk_word").hide();
 			});
+			$("#addKnow").click(function () {
+               alert("加入成功");
+            });
 		</script>
 	</body>
 

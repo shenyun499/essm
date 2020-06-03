@@ -1,18 +1,20 @@
 package com.essm.service.impl;
 
-import com.essm.entity.Word;
 import com.essm.dao.WordMapper;
+import com.essm.entity.Word;
 import com.essm.service.WordService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
-import sun.misc.Request;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 单词表(Word)表服务实现类
  *
- * @author makejava
+ * @author xuexue
  * @since 2020-05-23 20:05:07
  */
 @Service("wordService")
@@ -41,6 +43,29 @@ public class WordServiceImpl implements WordService {
     @Override
     public List<Word> queryAllByLimit(int offset, int limit) {
         return this.wordMapper.queryAllByLimit(offset, limit);
+    }
+
+    /**
+     * 通过实体作为筛选条件查询
+     *
+     * @param word 实例对象
+     * @return 对象列表
+     */
+    @Override
+    public List<Word> queryAll(Word word) {
+        return this.wordMapper.queryAll(word);
+    }
+
+    /**
+     * 通过用户id和单词熟练度sign查询所有的word
+     *
+     * @param userId 用户id
+     * @param sign   单词熟练状态 1为掌握 2为不掌握
+     * @return 单词列表
+     */
+    @Override
+    public List<Word> queryAllByUserIdAndSign(Integer userId, Integer sign) {
+        return this.queryAllByUserIdAndSign(userId, sign);
     }
 
     /**
@@ -80,4 +105,54 @@ public class WordServiceImpl implements WordService {
     public boolean deleteById(Integer id) {
         return this.wordMapper.deleteById(id) > 0;
     }
+
+    /**
+     * 根据指定条件分页查询单词
+     *
+     * @param pageNum  当前页数
+     * @param pageSize 每页记录数
+     * @param userId   用户id
+     * @param sign     单词状态
+     * @return 单词列表
+     */
+    @Override
+    public List<Word> findAllWordByPage(Integer pageNum, Integer pageSize, Integer userId, Integer sign) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Word> words = this.wordMapper.queryAllByUserIdAndSign(userId, sign);
+        return words;
+    }
+
+    /**
+     * 查询分页信息
+     *
+     * @param pageNum  当前页数
+     * @param pageSize 每页记录数
+     * @param userId   用户id
+     * @param sign     单词状态
+     * @return 分页列表
+     */
+    @Override
+    public PageInfo<Word> findAllWordByPageS(Integer pageNum, Integer pageSize, Integer userId, Integer sign) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Word> words = this.wordMapper.queryAllByUserIdAndSign(userId, sign);
+        PageInfo<Word> pageInfo = new PageInfo<>(words);
+        return pageInfo;
+    }
+
+    /**
+     * 按照单词搜索单词信息
+     *
+     * @param pageNum  当前页数
+     * @param pageSize 每页记录数
+     * @param word     单词信息
+     * @return
+     */
+    @Override
+    public PageInfo<Word> searchWordByPageS(Integer pageNum, int pageSize, Word word) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Word> words = this.wordMapper.queryAll(word);
+        PageInfo<Word> pageInfo = new PageInfo<>(words);
+        return pageInfo;
+    }
+
 }
