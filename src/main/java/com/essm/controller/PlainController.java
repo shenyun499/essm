@@ -48,7 +48,7 @@ public class PlainController {
         Integer userId = cookieUtils.getUserIdByCookie(request.getCookies());
         plain.setPid(userId);
         plainService.update(plain);
-        return "/planmodule.html";
+        return "redirect:/planmodule.html";
     }
 
 }
