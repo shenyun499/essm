@@ -70,4 +70,12 @@ public interface PlainMapper {
      * @param userId 用户编号
      */
     void updateAddWord(Integer userId, Integer time);
+
+    /**
+     * 计划字段，接龙数量自增1
+     *
+     * @param time 时间
+     * @param userId 用户编号
+     */
+    void updateAddGame(Integer userId, Integer time);
 }

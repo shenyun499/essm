@@ -37,9 +37,13 @@ class EssmApplicationTests {
     public void redisTest() {
         Word word = wordMapper.queryById(1);
         String stringWord = JsonUtils.objectToJson(word);
-        System.out.println(stringWord);
         redisUtils.leftPush("ids", stringWord);
-        //System.out.println((Word)redisUtils.leftPop("ids"));
+        /*System.out.println(redisUtils.exists("ids"));
+        System.out.println("-----删除key" + redisUtils.delete("ids"));
+        System.out.println(redisUtils.exists("ids"));*/
+
+        System.out.println(JsonUtils.jsonToPojo(redisUtils.leftPeek("1test").toString(), Word.class));
+        //System.out.println(JsonUtils.jsonToPojo(redisUtils.leftPeek("1test").toString(), Word.class));
     }
 
 

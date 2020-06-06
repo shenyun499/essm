@@ -126,4 +126,16 @@ public class PlainServiceImpl implements PlainService {
     public void updateAddWord(Integer userId) {
         plainMapper.updateAddWord(userId, dateUtils.getNowDate());
     }
+
+    /**
+     * 计划字段，接龙数量自增1
+     *
+     * @param userId 用户编号
+     */
+    @Override
+    public void updateAddGame(Integer userId) {
+        plainMapper.updateAddGame(userId, dateUtils.getNowDate());
+    }
+
+
 }

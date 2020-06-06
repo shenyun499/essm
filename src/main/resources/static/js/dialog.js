@@ -1,4 +1,8 @@
 $(function() {
+	/*$.ajaxSetup({
+		cache: false
+	});*/
+
 	//使用jQuery的load方法，将页面加载进来
 	$(".include").each(function() {
 		if(!!$(this).attr("file")) {
@@ -235,13 +239,17 @@ $(function() {
 					sign: "1"
 				},
 				success: function (data) {
-					$("#aws").text(data["addWordNums"] + "/" + data["addWordNum"]);
-					$("#kws").text(data["knowWordNums"] + "/" + data["knowWordNum"]);
-					$("#sws").text(data["studyNums"] + "/" + data["studyNum"]);
-					$("#gws").text(data["gameNums"] + "/" + data["gameNum"]);
+					$("#plainst").show();
+					var t1 = parseInt(data["addWordNums"]) > parseInt(data["addWordNum"]) ? parseInt(data["addWordNum"]) :parseInt(data["addWordNums"]);
+					var t2 = parseInt(data["knowWordNums"]) > parseInt(data["knowWordNum"]) ? parseInt(data["knowWordNum"]) :parseInt(data["knowWordNums"]);
+					var t3 = parseInt(data["studyNums"]) > parseInt(data["studyNum"]) ? parseInt(data["studyNum"]) :parseInt(data["studyNums"]);
+					var t4 = parseInt(data["gameNums"]) > parseInt(data["gameNum"]) ? parseInt(data["gameNum"]) :parseInt(data["gameNums"]);
+					$("#aws").text( t1 + "/" + data["addWordNum"]);
+					$("#kws").text(t2 + "/" + data["knowWordNum"]);
+					$("#sws").text(t3 + "/" + data["studyNum"]);
+					$("#gws").text(t4 + "/" + data["gameNum"]);
 				},
 				error: function (status) {
-					$("#plainst").hide();
 					$("#noplain").show();
 				}
 			});

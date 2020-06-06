@@ -89,4 +89,14 @@
         delete from essm.essm_word where id = #{id}
     </delete>
 
+    <select id="queryByKnumAndUknum" resultMap="WordMap">
+        SELECT
+          id, pid, chinese, english, sign
+        FROM
+          (SELECT * FROM essm.essm_word WHERE pid=#{userId} AND sign=1 ORDER BY RAND() LIMIT #{knum}) t1
+        UNION ALL
+        SELECT * FROM
+          (SELECT * FROM essm.essm_word WHERE pid=#{userId} AND sign=2 ORDER BY RAND() LIMIT #{uknum}) t2
+    </select>
+
 </mapper>

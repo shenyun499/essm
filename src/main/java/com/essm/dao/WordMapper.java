@@ -85,4 +85,14 @@ public interface WordMapper {
      * @param id 单词id
      */
     void removeWordKnow(Integer id);
+
+    /**
+     * 根据掌握单词和非掌握单词数量进行随机查询
+     *
+     * @param userId 用户编号
+     * @param knum 掌握单词数
+     * @param uknum 非掌握单词数
+     * @return 单词列表
+     */
+    List<Word> queryByKnumAndUknum(Integer userId, int knum, int uknum);
 }

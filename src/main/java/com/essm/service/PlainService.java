@@ -68,4 +68,11 @@ public interface PlainService {
      * @param userId 用户编号
      */
     void updateAddWord(Integer userId);
+
+    /**
+     * 计划字段，接龙数量自增1
+     *
+     * @param userId 用户编号
+     */
+    void updateAddGame(Integer userId);
 }

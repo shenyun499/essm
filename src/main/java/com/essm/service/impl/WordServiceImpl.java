@@ -1,14 +1,18 @@
 package com.essm.service.impl;
 
+import com.essm.common.JsonUtils;
+import com.essm.common.RedisUtils;
 import com.essm.dao.WordMapper;
 import com.essm.entity.Word;
 import com.essm.service.WordService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,6 +25,12 @@ import java.util.List;
 public class WordServiceImpl implements WordService {
     @Resource
     private WordMapper wordMapper;
+
+    @Autowired
+    private RedisUtils redisUtils;
+
+    private static final Log log = LogFactory.getLog(WordServiceImpl.class);
+
 
     /**
      * 通过ID查询单条数据
@@ -153,6 +163,40 @@ public class WordServiceImpl implements WordService {
         List<Word> words = this.wordMapper.queryAll(word);
         PageInfo<Word> pageInfo = new PageInfo<>(words);
         return pageInfo;
+    }
+
+    /**
+     * 初始化单词放入redis中--盲式英文学习、挑战接龙、测测实力
+     *
+     * @param userId 用户编号
+     * @param knum   掌握单词数
+     * @param uknum  非掌握单词数
+     * @param key   redis的key
+     */
+    @Override
+    public void studyModule(Integer userId, int knum, int uknum, String key) {
+        //判断redis是否存在key
+        if (redisUtils.exists(key)) {
+            //存在则判断redis长度是否为knum+uknum
+            if (redisUtils.size(key) == (knum + uknum)) {
+                //相等则结束方法
+                log.info("缓存可以再次利用！");
+                return;
+            }
+            //否则删除redis数据，从数据库查询数据，放入redis中
+            redisUtils.delete(key);
+            List<Word> list = wordMapper.queryByKnumAndUknum(userId, knum, uknum);
+            for (Word word : list) {
+                redisUtils.leftPush(key, JsonUtils.objectToJson(word));
+            }
+            return;
+        }
+        //redis不存在key，从数据库查询数据放入redis中
+        List<Word> list = wordMapper.queryByKnumAndUknum(userId, knum, uknum);
+        for (Word word : list) {
+            redisUtils.leftPush(key, JsonUtils.objectToJson(word));
+        }
+
     }
 
 }

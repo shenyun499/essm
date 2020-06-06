@@ -106,6 +106,18 @@
             <if test="createTime != null">
                 create_time = #{createTime},
             </if>
+            <if test="addWordNums != null">
+                add_word_nums = #{addWordNums},
+            </if>
+            <if test="knowWordNums != null">
+                know_word_nums = #{knowWordNums},
+            </if>
+            <if test="studyNums != null">
+                study_nums = #{studyNums},
+            </if>
+            <if test="gameNums != null">
+                game_nums = #{gameNums},
+            </if>
         </set>
         where pid = #{pid} and sign = #{sign}
     </update>
@@ -114,6 +126,13 @@
     <update id="updateAddWord">
         update essm.essm_plain
           set add_word_nums = add_word_nums + 1
+        where pid = #{userId} and create_time=#{time}
+    </update>
+
+    <!--增加单词数1，记录集合状态中-->
+    <update id="updateAddGame">
+        update essm.essm_plain
+          set game_nums = game_nums + 1
         where pid = #{userId} and create_time=#{time}
     </update>
 

@@ -1,6 +1,9 @@
 package com.essm.controller;
 
 import com.essm.common.CookieUtils;
+import com.essm.common.JsonUtils;
+import com.essm.common.RedisUtils;
+import com.essm.entity.Plain;
 import com.essm.entity.Word;
 import com.essm.service.PlainService;
 import com.essm.service.WordService;
@@ -40,6 +43,9 @@ public class WordController {
 
     @Autowired
     private PlainService plainService;
+
+    @Autowired
+    private RedisUtils redisUtils;
 
     /**
      * 通过主键查询单条数据
@@ -216,4 +222,87 @@ public class WordController {
         wordService.update(word);
         return "redirect:/kwords/list/"+pageNum;
     }
+
+    /**
+     * 接龙挑战--中文---初始化操作，直接开始或将单词放入redis中
+     *
+     * @param request
+     */
+    @ResponseBody
+    @PostMapping("/game/start")
+    public void gameStart(HttpServletRequest request, @RequestParam("knum") Integer knum, @RequestParam("uknum") Integer uknum) {
+        Integer cookie = cookieUtils.getUserIdByCookie(request.getCookies());
+        wordService.studyModule(cookie, knum, uknum, cookie + "game");
+
+        //状态记录英文接龙增加1
+        plainService.updateAddGame(cookie);
+    }
+
+    /**
+     * 测测实力---初始化操作，直接开始或将单词放入redis中
+     *
+     * @param request
+     */
+    @ResponseBody
+    @PostMapping("/test/start")
+    public void testStart(HttpServletRequest request) {
+        Integer cookie = cookieUtils.getUserIdByCookie(request.getCookies());
+        wordService.studyModule(cookie, 15, 5, cookie + "test");
+    }
+
+    /**
+     * 从redis中得到一个单词
+     *
+     * @param request
+     * @param key
+     * @return
+     */
+    @ResponseBody
+    @PostMapping("/getWord")
+    public Word getWordFromRedis(HttpServletRequest request, @RequestParam("key") String key) {
+        key = cookieUtils.getUserIdByCookie(request.getCookies()) + key;
+        return JsonUtils.jsonToPojo(redisUtils.leftPeek(key).toString(), Word.class);
+    }
+
+    /**
+     * 移除并从redis中得到一个单词
+     *
+     * @param request
+     * @param key
+     * @return
+     */
+    @ResponseBody
+    @PostMapping("/getAndRemoveWord")
+    public Word getAndRemoveWordFromRedis(HttpServletRequest request, @RequestParam("key") String key) {
+        key = cookieUtils.getUserIdByCookie(request.getCookies()) + key;
+        JsonUtils.jsonToPojo(redisUtils.leftPop(key).toString(), Word.class);
+        return JsonUtils.jsonToPojo(redisUtils.leftPeek(key).toString(), Word.class);
+    }
+
+    /**
+     * 从redis中移除一个单词
+     *
+     * @param request
+     * @param key
+     * @return
+     */
+    @ResponseBody
+    @PostMapping("/removeWord")
+    public Word removeFromRedis(HttpServletRequest request, @RequestParam("key") String key) {
+        key = cookieUtils.getUserIdByCookie(request.getCookies()) + key;
+        return JsonUtils.jsonToPojo(redisUtils.leftPop(key).toString(), Word.class);
+    }
+
+    /**
+     * 清空对应的redis的key
+     *
+     * @param key
+     */
+    @ResponseBody
+    @PostMapping("/clearAll")
+    public Boolean clearRedisKey(HttpServletRequest request, @RequestParam("key") String key) {
+        key = cookieUtils.getUserIdByCookie(request.getCookies()) + key;
+        return redisUtils.delete(key);
+    }
+
 }

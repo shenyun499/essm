@@ -71,6 +71,26 @@ public class RedisUtils {
     }
 
     /**
+     * 判断key是否存在
+     *
+     * @param key
+     * @return
+     */
+    public Boolean exists(Object key) {
+        return redisTemplate.hasKey(key);
+    }
+
+    /**
+     * 删除key
+     *
+     * @param key
+     * @return
+     */
+    public Boolean delete(Object key) {
+        return redisTemplate.delete(key);
+    }
+
+    /**
      * 重写系列化器，防止乱码
      *
      */
