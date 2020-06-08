@@ -43,6 +43,13 @@ public class PlainController {
         return plainService.queryByDate(plain);
     }
 
+    /**
+     * 指定计划功能实现
+     *
+     * @param request
+     * @param plain
+     * @return
+     */
     @RequestMapping("/add")
     public String addPlain(HttpServletRequest request, Plain plain) {
         Integer userId = cookieUtils.getUserIdByCookie(request.getCookies());

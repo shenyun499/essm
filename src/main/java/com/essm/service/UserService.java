@@ -60,10 +60,10 @@ public interface UserService {
     User queryByUser(User user);
 
     /**
-     * 过实体作为筛选条件查询
+     * 查出所有用户信息
      *
-     * @param user
      * @return
      */
-    List<User> queryAll(User user);
+    List<User> queryAll();
+
 }

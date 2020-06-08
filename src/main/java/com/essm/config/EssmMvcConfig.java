@@ -35,7 +35,7 @@ public class EssmMvcConfig implements WebMvcConfigurer {
             for(StaticPagePathFinder.PagePaths pagePaths :staticPagePathFinder.findPath()){
                 String urlPath = pagePaths.getUrlPath();
                 registry.addViewController(urlPath+".html").setViewName(pagePaths.getFilePath());
-                if(!urlPath.isEmpty()){
+                if(!urlPath.isEmpty()) {
                     registry.addViewController(urlPath).setViewName(pagePaths.getFilePath());
                 }
             }

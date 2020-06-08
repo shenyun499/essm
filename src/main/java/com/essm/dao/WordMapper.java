@@ -95,4 +95,12 @@ public interface WordMapper {
      * @return 单词列表
      */
     List<Word> queryByKnumAndUknum(Integer userId, int knum, int uknum);
+
+
+    /**
+     * 格式化个人库
+     * @param userId
+     * @return
+     */
+    Integer deleteAllWord(Integer userId);
 }

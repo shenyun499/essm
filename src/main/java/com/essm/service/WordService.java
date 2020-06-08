@@ -113,4 +113,12 @@ public interface WordService {
      * @param key redis的key
      */
     void studyModule(Integer userId, int knum, int uknum, String key);
+
+    /**
+     * 格式化个人库操作
+     *
+     * @param userId
+     * @param password
+     */
+    Integer deleteAllWord(Integer userId, String password);
 }

@@ -48,18 +48,6 @@ public class WordController {
     private RedisUtils redisUtils;
 
     /**
-     * 通过主键查询单条数据
-     *
-     * @param id 主键
-     * @return 单条数据
-     */
-    @ResponseBody
-    @GetMapping("selectOne/{id}")
-    public Word selectOne(@PathVariable Integer id) {
-        return this.wordService.queryById(id);
-    }
-
-    /**
      * 添加单词
      *
      * @param word 单词实体
@@ -79,7 +67,7 @@ public class WordController {
     }
 
     /**
-     * 跳转到更新页面
+     * 获取更新信息
      *
      * @param id
      * @return
@@ -100,7 +88,6 @@ public class WordController {
     @PutMapping("/word")
     public String queryWord(Word word) {
         wordService.update(word);
-        System.out.println("更新成功");
         if (word.getSign() == 1) {
             return "redirect:/kwords/list/1";
         }
@@ -221,6 +208,22 @@ public class WordController {
         word.setSign(2);
         wordService.update(word);
         return "redirect:/kwords/list/"+pageNum;
+    }
+
+    /**
+     * 格式化库操作
+     *
+     * @param password 密码
+     * @return
+     */
+    @ResponseBody
+    @PostMapping("/deleteAllWord")
+    public Map<String, Integer> deleteAllWord(HttpServletRequest request, @RequestParam("password") String password) {
+        Map<String, Integer> map = new HashMap<>();
+        Integer userId = cookieUtils.getUserIdByCookie(request.getCookies());
+        Integer result = wordService.deleteAllWord(userId, password);
+        map.put("status", result);
+        return map;
     }
 
     /**

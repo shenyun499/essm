@@ -87,8 +87,13 @@ public class UserServiceImpl implements UserService {
         return userMapper.queryByUser(user);
     }
 
+    /**
+     * 查出所有用户
+     *
+     * @return
+     */
     @Override
-    public List<User> queryAll(User user) {
-        return userMapper.queryAll(user);
+    public List<User> queryAll() {
+        return userMapper.queryAll();
     }
 }

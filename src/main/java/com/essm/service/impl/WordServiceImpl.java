@@ -3,6 +3,7 @@ package com.essm.service.impl;
 import com.essm.common.JsonUtils;
 import com.essm.common.RedisUtils;
 import com.essm.dao.WordMapper;
+import com.essm.entity.User;
 import com.essm.entity.Word;
 import com.essm.service.WordService;
 import com.github.pagehelper.PageHelper;
@@ -28,6 +29,9 @@ public class WordServiceImpl implements WordService {
 
     @Autowired
     private RedisUtils redisUtils;
+
+    @Autowired
+    private UserServiceImpl userService;
 
     private static final Log log = LogFactory.getLog(WordServiceImpl.class);
 
@@ -197,6 +201,26 @@ public class WordServiceImpl implements WordService {
             redisUtils.leftPush(key, JsonUtils.objectToJson(word));
         }
 
+    }
+
+    /**
+     * 格式化个人库操作
+     *
+     * @param userId
+     * @param password
+     */
+    @Override
+    public Integer deleteAllWord(Integer userId, String password) {
+        //查询用户密码是否正确
+        User user = new User();
+        user.setId(userId);
+        user.setPassword(password);
+        //用户密码正确
+        if (userService.queryByUser(user) != null) {
+            wordMapper.deleteAllWord(userId);
+            return 1;
+        }
+        return 0;
     }
 
 }

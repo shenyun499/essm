@@ -75,6 +75,9 @@ $(function() {
 					$('#user_btn').text($.cookie("username"));
 					$('#user_btn').css("display","inline");
 					alert("登录成功");
+					if (data["sign"] == "1") {
+						window.location.href="/admin";
+					}
 				} else if (result == 2) {
 					$('#d_tip').text("用户名或者密码错误!");
 					$('#d_tip').css('color', 'red');
