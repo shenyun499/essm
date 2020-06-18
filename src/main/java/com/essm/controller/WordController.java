@@ -95,6 +95,18 @@ public class WordController {
     }
 
     /**
+     * 根据单词id查询单词信息
+     *
+     * @param id
+     * @return
+     */
+    @ResponseBody
+    @GetMapping("/word/{id}")
+    public Word getWord(@PathVariable("id") Integer id) {
+        return wordService.queryById(id);
+    }
+
+    /**
      * 删除单词
      *
      * @param id 单词id
@@ -108,6 +120,17 @@ public class WordController {
             return "redirect:/kwords/list/1";
         }
         return "redirect:/ukwords/list/1";
+    }
+
+    @ResponseBody
+    @GetMapping("/addKnowWord")
+    public void addKnowWord(Word word, HttpServletRequest request) {
+        word.setSign(1);
+        wordService.update(word);
+        //记录今日计划加1
+        //根据cookie得到当前客户端的用户id
+        Integer userid = cookieUtils.getUserIdByCookie(request.getCookies());
+        plainService.updateAddKnowWord(userid);
     }
 
     /**
@@ -124,7 +147,8 @@ public class WordController {
         //根据cookie得到当前客户端的用户id
         Integer userid = cookieUtils.getUserIdByCookie(request.getCookies());
         word.setPid(userid);
-        PageInfo<Word> pageInfoList = wordService.searchWordByPageS(id, 1, word);
+        PageInfo<Word> pageInfoList = wordService.searchWordByPageS(1, 1, word);
+        System.out.println(pageInfoList);
         model.addAttribute("words", pageInfoList);
         return "/knowwords.html";
     }
@@ -145,7 +169,8 @@ public class WordController {
         word.setPid(userid);
         PageInfo<Word> pageInfoList = wordService.searchWordByPageS(id, 2, word);
         model.addAttribute("words", pageInfoList);
-        return "/uknowwords.html";
+        System.out.println(pageInfoList);
+        return "/unknowwords.html";
     }
 
     /**
@@ -160,7 +185,7 @@ public class WordController {
     public String queryPageInfo(HttpServletRequest request, @PathVariable Integer id, Model model) {
         //根据cookie得到当前客户端的用户id
         Integer userid = cookieUtils.getUserIdByCookie(request.getCookies());
-        PageInfo<Word> pageInfoList = wordService.findAllWordByPageS(id, 2, userid, 1);
+        PageInfo<Word> pageInfoList = wordService.findAllWordByPageS(id, 9, userid, 1);
         model.addAttribute("words", pageInfoList);
         return "/knowwords.html";
     }
@@ -177,9 +202,26 @@ public class WordController {
     public String queryPageInfoU(HttpServletRequest request, @PathVariable Integer id, Model model) {
         //根据cookie得到当前客户端的用户id
         Integer userid = cookieUtils.getUserIdByCookie(request.getCookies());
-        PageInfo<Word> pageInfoList = wordService.findAllWordByPageS(id, 2, userid, 2);
+        PageInfo<Word> pageInfoList = wordService.findAllWordByPageS(id, 9, userid, 2);
         model.addAttribute("words", pageInfoList);
         return "/unknowwords.html";
+    }
+
+    /**
+     * 得到未掌握单词库的所有单词信息、分页信息
+     *
+     * @param request
+     * @param id
+     * @param model
+     * @return
+     */
+    @GetMapping("/studys/list/{id}")
+    public String queryPageInfoS(HttpServletRequest request, @PathVariable Integer id, Model model) {
+        //根据cookie得到当前客户端的用户id
+        Integer userid = cookieUtils.getUserIdByCookie(request.getCookies());
+        PageInfo<Word> pageInfoList = wordService.findAllWordByPageS(id, 16, userid, 2);
+        model.addAttribute("words", pageInfoList);
+        return "/studydetail_c.html";
     }
 
     /**
@@ -190,9 +232,13 @@ public class WordController {
      * @return
      */
     @GetMapping("/addKnow")
-    public String addWordKnow(Word word, Integer pageNum) {
+    public String addWordKnow(HttpServletRequest request, Word word, Integer pageNum) {
         word.setSign(1);
         wordService.update(word);
+        //记录今日计划加1
+        //根据cookie得到当前客户端的用户id
+        Integer userid = cookieUtils.getUserIdByCookie(request.getCookies());
+        plainService.updateAddKnowWord(userid);
         return "redirect:/ukwords/list/"+pageNum;
     }
 
@@ -224,6 +270,21 @@ public class WordController {
         Integer result = wordService.deleteAllWord(userId, password);
         map.put("status", result);
         return map;
+    }
+
+    /**
+     * 接龙挑战--中文---初始化操作，直接开始或将单词放入redis中
+     *
+     * @param request
+     */
+    @ResponseBody
+    @PostMapping("/study/start")
+    public void studyStart(HttpServletRequest request) {
+        Integer cookie = cookieUtils.getUserIdByCookie(request.getCookies());
+        wordService.studyModule(cookie, 12, 3, cookie + "study");
+
+        //盲式学习次数增加1
+        plainService.updateAddStudy(cookie);
     }
 
     /**
@@ -308,4 +369,26 @@ public class WordController {
         return redisUtils.delete(key);
     }
 
+    /**
+     * 记录位置，中文学习====记录对应的redis的key
+     *
+     * @param sign
+     */
+    @ResponseBody
+    @PostMapping("/sign")
+    public void setKey(HttpServletRequest request, String sign) {
+        String key = cookieUtils.getUserIdByCookie(request.getCookies()) + "sign";
+        redisUtils.set(key, sign);
+    }
+
+    /**
+     * 获取位置，中文学习====获取对应的redis的key
+     *
+     */
+    @ResponseBody
+    @PostMapping("/getsign")
+    public String getKey(HttpServletRequest request) {
+        String key = cookieUtils.getUserIdByCookie(request.getCookies()) + "sign";
+        return redisUtils.get(key);
+    }
 }

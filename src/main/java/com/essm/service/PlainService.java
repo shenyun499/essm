@@ -75,4 +75,18 @@ public interface PlainService {
      * @param userId 用户编号
      */
     void updateAddGame(Integer userId);
+
+    /**
+     * 计划字段，掌握单词数量自增1
+     *
+     * @param userId 用户编号
+     */
+    void updateAddKnowWord(Integer userId);
+
+    /**
+     * 计划字段，掌握单词数量自增1
+     *
+     * @param userId 用户编号
+     */
+    void updateAddStudy(Integer userId);
 }

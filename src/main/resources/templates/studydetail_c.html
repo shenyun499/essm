@@ -30,19 +30,26 @@
 			</div>
 			<div class="study">
 				<h3>盲式中文学习</h3>
-				<a href="studymodule.html" class="btn btn-info stu">记录并退出</a>
-				<p style="font-size: 18px;margin-left: 1rem;">单词总数: 40</p>
+				<a href="javascript:void(0);" id="sign" class="btn btn-info stu">记录并退出</a>
+				<p style="font-size: 18px;margin-left: 1rem;">单词总数: [[${words.total}]]</p>
 				<div class="study_cont">
-					<div class="include" file="words.html">单词翻译模块内容</div>
+					<div class="row">
+						<div class="col-md-3" th:each="word, wordStat: ${words.list}">
+							<div class="study_contd">
+								<span>[[${word.english}]]<a href="javascript:void(0);" class="status" th:id="${word.id}">+</a></span>
+								<a href="javascrip:void(0);" th:id="${word.id}" class="c_e" onclick="showChinese(this)">中文</a>
+							</div>
+						</div>
+					</div>
 				</div>
 				<!-- 分页 -->
 				<nav aria-label="Page navigation">
 					<ul class="pagination" style="padding-left: 1rem;margin-top: 1rem;font-size: 18px;color: white;">
-						<span>1/3页</span>
-						<a href="#" style="text-decoration: none;"  class="btn	btn-default">首页</a>
-						<a href="#"  style="text-decoration: none;" class="btn 	btn-default">上一页</a>
-						<a href="#"  style="text-decoration: none;" class="btn 	btn-default">下一页</a>
-						<a href="#"  style="text-decoration: none;" class="btn 	btn-default">尾页</a> 
+						<span>[[${words.pageNum}]]/[[${words.pages}]]</span>
+						<a href="#" th:href="@{1}" style="text-decoration: none;"  class="btn	btn-default">首页</a>
+						<a href="#" th:href="@{${words.pageNum == 1 ? 1 : words.pageNum-1}}" style="text-decoration: none;" class="btn btn-default">上一页</a>
+						<a href="#" th:href="@{${words.pageNum == words.pages ? words.pages : words.pageNum+1}}" style="text-decoration: none;" class="btn btn-default">下一页</a>
+						<a href="#" th:href="@{${words.pages}}" style="text-decoration: none;" class="btn btn-default">尾页</a>
 					</ul>
 				</nav>
 			</div>
@@ -53,13 +60,44 @@
 		<div class="include" file="login.html"></div>
 		<script>
 			/* 翻译 */
-			$('body').delegate('.c_e', 'click', function() {
-				if ($(this).text() == '中文') {
-					$(this).text("xxx中文");
+			 function showChinese(_this) {
+				if ($(_this).text() == '中文') {
+					$.ajax({
+						url: "/word/" + $(_this).attr('id'),
+						type: "get",
+						dataType: "json",
+						success: function (data) {
+							$(_this).text(data["chinese"]);
+						}
+					})
+
 				} else {
-					$(this).text("中文");
+					$(_this).text("中文");
 				}
+			};
+
+			//加入掌握状态
+			$(".status").click(function () {
+				$.ajax({
+					url: "/addKnowWord",
+					type: "GET",
+					data: {id: $(this).attr('id')},
+				});
+				alert("加入成功");
+				window.location.reload();
 			});
+
+			//记录并退出
+			$("#sign").click(function () {
+				$.ajax({
+					url: "/sign",
+					type: "POST",
+					data: {sign: [[${words.pageNum}]]},
+					success: function () {
+						window.location.href="/studymodule.html";
+					}
+				});
+			})
 		</script>
 	</body>
 

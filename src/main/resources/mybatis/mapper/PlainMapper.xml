@@ -57,9 +57,6 @@
             <if test="gameNum != null">
                 and game_num = #{gameNum}
             </if>
-            <if test="sign != null">
-                and sign = #{sign}
-            </if>
             <if test="createTime != null">
                 and create_time = #{createTime}
             </if>
@@ -100,9 +97,6 @@
             <if test="gameNum != null">
                 game_num = #{gameNum},
             </if>
-            <if test="sign != null">
-                sign = #{sign},
-            </if>
             <if test="createTime != null">
                 create_time = #{createTime},
             </if>
@@ -133,6 +127,20 @@
     <update id="updateAddGame">
         update essm.essm_plain
           set game_nums = game_nums + 1
+        where pid = #{userId} and create_time=#{time}
+    </update>
+
+    <!--增加单词数1，记录集合状态中-->
+    <update id="updateAddKnowWord">
+        update essm.essm_plain
+          set know_word_nums = know_word_nums + 1
+        where pid = #{userId} and create_time=#{time}
+    </update>
+
+    <!--增加单词数1，记录集合状态中-->
+    <update id="updateAddStudy">
+        update essm.essm_plain
+          set study_nums = study_nums + 1
         where pid = #{userId} and create_time=#{time}
     </update>
 

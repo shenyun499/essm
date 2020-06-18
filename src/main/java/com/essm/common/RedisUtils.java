@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
@@ -15,6 +16,9 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  */
 @Configuration
 public class RedisUtils {
+
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
     @Autowired
     private RedisTemplate redisTemplate;
@@ -88,6 +92,25 @@ public class RedisUtils {
      */
     public Boolean delete(Object key) {
         return redisTemplate.delete(key);
+    }
+
+    /**
+     * 添加string key
+     *
+     * @param key
+     * @param value
+     */
+    public void set(String key, String value) {
+        stringRedisTemplate.opsForValue().set(key, value);
+    }
+
+    /**
+     * 获取string key
+     *
+     * @param key
+     */
+    public String get(String key) {
+        return stringRedisTemplate.opsForValue().get(key);
     }
 
     /**

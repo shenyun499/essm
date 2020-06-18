@@ -167,12 +167,27 @@ $(function() {
 			alert("邮箱不能为空！");
 			return false;
 		}
-		var c4 = checkRDataY();
+		/*var c4 = checkRDataY();
 		if (!c4) {
 			alert("验证码不能为空！");
 			return false;
 		}
-		return true;
+		*/
+		$.ajax({
+			url: "/user",
+			type: "POST",
+			data: {
+				username: $('#r_username').val(),
+				password: $('#r_password').val(),
+				email: $('#email').val(),
+				sign: $('#sign').val(),
+			},
+			success: function (status) {
+				alert(status);
+				alert("注册成功");
+			}
+		});
+		return false;
 	});
 	//禁止选中对话框内容
 	if (document.attachEvent) { //ie的事件监听，拖拽div时禁止选中内容，firefox与chrome已在css中设置过-moz-user-select: none; -webkit-user-select: none;

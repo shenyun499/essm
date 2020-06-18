@@ -154,7 +154,7 @@ public class WordServiceImpl implements WordService {
     }
 
     /**
-     * 按照单词搜索单词信息
+     * 按照单词英文搜索单词信息
      *
      * @param pageNum  当前页数
      * @param pageSize 每页记录数
@@ -164,6 +164,7 @@ public class WordServiceImpl implements WordService {
     @Override
     public PageInfo<Word> searchWordByPageS(Integer pageNum, int pageSize, Word word) {
         PageHelper.startPage(pageNum, pageSize);
+        System.out.println(word);
         List<Word> words = this.wordMapper.queryAll(word);
         PageInfo<Word> pageInfo = new PageInfo<>(words);
         return pageInfo;

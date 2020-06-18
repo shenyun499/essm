@@ -39,7 +39,7 @@
 					  <option>中等</option>
 					  <option>困难</option>
 					</select>
-					<a href="gamedetail_e.html" class="btn btn-danger" id="starte">开始挑战</a>
+					<a href="javascript:void(0);" class="btn btn-danger" id="starte">开始挑战</a>
 				</div>
 			</div>
 
@@ -50,6 +50,8 @@
 
 		<script type="application/javascript">
 			$("#starte").click(function () {
+				var storage = window.localStorage;
+				storage.setItem("sign", 0);
 				var knum,uknum;
 				if ($("#selecte option:selected").text() == "简单") {
 					knum = 12;
@@ -66,16 +68,14 @@
 				$.ajax({
 					url: "/game/start",
 					type: "POST",
-					dataType: "json",
 					data: {
 						knum: knum,
 						uknum: uknum
+					},
+					success: function () {
+						window.location.href="gamedetail_e.html";
 					}
 				});
-				var storage = window.localStorage;
-				storage.setItem("sign", 0);
-				window.setTimeout(function (){
-				},2000);
 			})
 
 		</script>

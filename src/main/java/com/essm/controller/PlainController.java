@@ -44,7 +44,7 @@ public class PlainController {
     }
 
     /**
-     * 指定计划功能实现
+     * 制定计划功能实现
      *
      * @param request
      * @param plain

@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 class EssmApplicationTests {
-    @Autowired
+/*    @Autowired
     StringRedisTemplate stringRedisTemplate;
 
     @Autowired
@@ -38,13 +38,13 @@ class EssmApplicationTests {
         Word word = wordMapper.queryById(1);
         String stringWord = JsonUtils.objectToJson(word);
         redisUtils.leftPush("ids", stringWord);
-        /*System.out.println(redisUtils.exists("ids"));
+        *//*System.out.println(redisUtils.exists("ids"));
         System.out.println("-----删除key" + redisUtils.delete("ids"));
-        System.out.println(redisUtils.exists("ids"));*/
+        System.out.println(redisUtils.exists("ids"));*//*
 
         System.out.println(JsonUtils.jsonToPojo(redisUtils.leftPeek("1test").toString(), Word.class));
         //System.out.println(JsonUtils.jsonToPojo(redisUtils.leftPeek("1test").toString(), Word.class));
-    }
+    }*/
 
 
 

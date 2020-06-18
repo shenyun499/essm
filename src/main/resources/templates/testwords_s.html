@@ -33,7 +33,7 @@
 				<a href="index.html" th:href="@{essm.html}" class="btn btn-info stu">返回</a>
 				<p></p>
 				<div class="gamechoose">
-					<a href="testwords.html" id="test_st" class="btn btn-danger">开始测试</a>
+					<a href="javascript:void(0);" id="test_st" class="btn btn-danger">开始测试</a>
 				</div>
 			</div>
 
@@ -43,15 +43,16 @@
 		<div class="include" file="login.html"></div>
 		<script type="application/javascript">
 			$("#test_st").click(function() {
-				$.ajax({
-					url: "/test/start",
-					type: "POST"
-				});
 				var count = window.localStorage;
 				count.setItem("correctSum", 0);
 				count.setItem("sign",0);
-				window.setTimeout(function (){
-				},1000);
+				$.ajax({
+					url: "/test/start",
+					type: "POST",
+					success: function () {
+						window.location.href="testwords.html";
+					}
+				});
 			});
 		</script>
 	</body>

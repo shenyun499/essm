@@ -32,6 +32,7 @@
 									<th>用户编号</th>
 									<th>用户名称</th>
 									<th>用户密码</th>
+									<th>用户邮箱</th>
 									<th>操作</th>
 								</tr>
 							</thead>
@@ -41,6 +42,7 @@
 									<td th:text="${user.id}"></td>
 									<td th:text="${user.username}"></td>
 									<td th:text="${user.password}"></td>
+									<td th:text="${user.email}"></td>
 									<td>
 										<a class="btn btn-primary  btn-sm" th:href="@{/user/} + ${user.id}">编辑</a>
 										<button class="btn btn-danger  btn-sm delete" th:attr="del_uri=@{/user/} + ${user.id}">删除</button>

@@ -78,4 +78,20 @@ public interface PlainMapper {
      * @param userId 用户编号
      */
     void updateAddGame(Integer userId, Integer time);
+
+    /**
+     * 计划字段，掌握单词数量自增1
+     *
+     * @param time 时间
+     * @param userId 用户编号
+     */
+    void updateAddKnowWord(Integer userId, Integer time);
+
+    /**
+     * 计划字段，盲式学习数量自增1
+     *
+     * @param time 时间
+     * @param userId 用户编号
+     */
+    void updateAddStudy(Integer userId, Integer time);
 }

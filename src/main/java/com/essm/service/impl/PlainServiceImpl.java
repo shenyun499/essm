@@ -137,5 +137,24 @@ public class PlainServiceImpl implements PlainService {
         plainMapper.updateAddGame(userId, dateUtils.getNowDate());
     }
 
+    /**
+     * 计划字段，掌握单词数量自增1
+     *
+     * @param userId
+     */
+    @Override
+    public void updateAddKnowWord(Integer userId) {
+        plainMapper.updateAddKnowWord(userId, dateUtils.getNowDate());
+    }
+
+    /**
+     * 计划字段，盲式学习数量自增1
+     *
+     * @param userId 用户编号
+     */
+    @Override
+    public void updateAddStudy(Integer userId) {
+        plainMapper.updateAddStudy(userId, dateUtils.getNowDate());
+    }
 
 }
