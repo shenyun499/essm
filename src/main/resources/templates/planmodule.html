@@ -34,12 +34,12 @@
 			<div class="row">
 				<div class="col-md-3"></div>
 				<div class="col-md-3">
-					<a href="javascrip:void(0);" class="plan_module" id="pto">今日计划</a>
-					<a href="javascrip:void(0);" style="color: red;font-size: 15px;position: absolute;margin: -30px 0 0 50px;"></a>
+					<a href="javascrip:void(0);" class="plan_module pto" id="pto">今日计划</a>
+					<a href="javascrip:void(0);" class="pto" id="plan_tip" style="color: red;font-size: 15px;position: absolute;margin: -30px 0 0 45px;"></a>
 				</div>
 				<div class="col-md-3">
-					<a href="javascrip:void(0);" class="plan_module" id="pmo">明日计划</a>
-					<a href="javascrip:void(0);" style="color: red;font-size: 15px;position: absolute;margin: -30px 0 0 50px;"></a>
+					<a href="javascrip:void(0);" class="plan_module pmo" id="pmo">明日计划</a>
+					<a href="javascrip:void(0);" class="pmo" id="plan_tip2" style="color: red;font-size: 15px;position: absolute;margin: -30px 0 0 45px;"></a>
 				</div>
 				<div class="col-md-3"></div>
 			</div>
@@ -48,8 +48,36 @@
 		<!--引入页面登录/注册-->
 		<div class="include" file="login.html"></div>
 		<script>
+			$(document).ready(function () {
+				$.ajax({
+					url: "/plain/status",
+					type: "POST",
+					dataType: "json",
+					data: {
+						sign: "1"
+					},
+					success: function (data) {
+						$("#plan_tip").text("重新制定计划");
+					},
+					error: function (status) {
+					}
+				});
+				$.ajax({
+					url: "/plain/status",
+					type: "POST",
+					dataType: "json",
+					data: {
+						sign: "2"
+					},
+					success: function (data) {
+						$("#plan_tip2").text("重新制定计划");
+					},
+					error: function (status) {
+					}
+				});
+			});
 			/* 今日计划制定 */
-			$('body').delegate('#pto', 'click', function() {
+			$('body').delegate('.pto', 'click', function() {
 				$('#screen').show();
 				$('#dialog4').show();
 			});
@@ -59,7 +87,7 @@
 			});
 			
 			/* 明日计划制定 */
-			$('body').delegate('#pmo', 'click', function() {
+			$('body').delegate('.pmo', 'click', function() {
 				$('#screen').show();
 				$('#dialog5').show();
 			});

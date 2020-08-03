@@ -103,7 +103,16 @@ public class PlainServiceImpl implements PlainService {
     @Override
     public Plain queryByDate(Plain plain) {
         //得到现在的时间，转换为Integer类型进行数据库查询
-        plain.setCreateTime(dateUtils.getNowDate());
+        if (plain.getSign() == 1) {
+            plain.setCreateTime(dateUtils.getNowDate());
+        } else {
+            //制定明日计划，时间需要加1
+            //得到现在的时间，转换为Integer类型进行数据库查询
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.DATE, 1);
+            String nowTime = calendar.get(Calendar.YEAR) + "" + (calendar.get(Calendar.MONDAY) + 1) + calendar.get(Calendar.DATE);
+            plain.setCreateTime(Integer.parseInt(nowTime));
+        }
         //查询数据库并返回
         return plainMapper.queryByDate(plain);
     }
@@ -117,4 +126,35 @@ public class PlainServiceImpl implements PlainService {
     public void updateAddWord(Integer userId) {
         plainMapper.updateAddWord(userId, dateUtils.getNowDate());
     }
+
+    /**
+     * 计划字段，接龙数量自增1
+     *
+     * @param userId 用户编号
+     */
+    @Override
+    public void updateAddGame(Integer userId) {
+        plainMapper.updateAddGame(userId, dateUtils.getNowDate());
+    }
+
+    /**
+     * 计划字段，掌握单词数量自增1
+     *
+     * @param userId
+     */
+    @Override
+    public void updateAddKnowWord(Integer userId) {
+        plainMapper.updateAddKnowWord(userId, dateUtils.getNowDate());
+    }
+
+    /**
+     * 计划字段，盲式学习数量自增1
+     *
+     * @param userId 用户编号
+     */
+    @Override
+    public void updateAddStudy(Integer userId) {
+        plainMapper.updateAddStudy(userId, dateUtils.getNowDate());
+    }
+
 }

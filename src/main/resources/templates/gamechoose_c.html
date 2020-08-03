@@ -34,12 +34,12 @@
 				<p></p>
 				<div class="gamechoose">
 					<span>难度选择：</span>
-					<select class="form-control" style="display: inline-block;width: 30%;">
+					<select class="form-control" id="selectc" style="display: inline-block;width: 30%;">
 					  <option>简单</option>
 					  <option>中等</option>
 					  <option>困难</option>
 					</select>
-					<a href="gamedetail_c.html" class="btn btn-danger" id="start">开始挑战</a>
+					<a href="javascript:void(0);" class="btn btn-danger" id="startc">开始挑战</a>
 				</div>
 			</div>
 
@@ -47,6 +47,37 @@
 
 		<!--登录-->
 		<div class="include" file="login.html"></div>
+
+		<script type="application/javascript">
+			$("#startc").click(function () {
+				var storage = window.localStorage;
+				storage.setItem("sign", 0);
+				var knum,uknum;
+				if ($("#selectc option:selected").text() == "简单") {
+					knum = 12;
+					uknum = 3;
+				} else if ($("#selectc option:selected").text() == "中等") {
+					knum = 9;
+					uknum = 6;
+				} else {
+					knum = 6;
+					uknum = 9;
+				}
+
+				/* 初始化 */
+				$.ajax({
+					url: "/game/start",
+					type: "POST",
+					data: {
+						knum: knum,
+						uknum: uknum
+					},
+					success: function () {
+						window.location.href="gamedetail_c.html";
+					}
+				});
+			});
+		</script>
 	</body>
 
 </html>

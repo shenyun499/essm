@@ -33,20 +33,19 @@
 				<a href="testwords_s.html" class="btn btn-info stu">退出</a>
 				<p></p>
 				<div class="input-group study_cont_e">
-					<h4>中文</h4>
-					<form action="#" method="post" id="eform">
+					<h4 id="test_chinese">中文</h4>
 						<input type="text" style="width: 81%;" class="form-control" placeholder="please input English" aria-label="Recipient's username"
-						 aria-describedby="button-addon2" id="input_en" value="">
+						 aria-describedby="button-addon2" id="input_en" value="" autocomplete="off">
 						<span style="display: block;color: #FF0000;font-weight: bold;height: 34px;line-height: 34px;text-align: center;font-size: 12px;"
 						 id="tip_en"></span>
-						<input type="submit" style="text-decoration: none;margin-top: 1rem;" class="btn btn-primary" value="进入下一个" />
-					</form>
+						<span id="h_english" style="display: none;"></span>
+						<input type="button" style="text-decoration: none;margin-top: 1rem;" class="btn btn-primary next_test" value="进入下一个" />
 				</div>
 				<!-- 分页 -->
 				<nav aria-label="Page navigation">
 					<ul class="pagination" style="padding-left: 19rem;font-size: 18px;color: white;">
-						<a href="#" style="text-decoration: none;" class="btn 	btn-danger">不认识跳过</a>
-						<a style="text-decoration: none;" class="btn btn-warning">完成指标3/20个</a>
+						<button href="javascrip:void(0);" style="text-decoration: none;" class="btn 	btn-danger" id="next">不认识跳过</button>
+						<a style="text-decoration: none;" class="btn btn-warning">完成指标<span id="sign" style="color: red;"></span>/20个</a>
 					</ul>
 				</nav>
 			</div>
@@ -56,22 +55,117 @@
 		<!--登录-->
 		<div class="include" file="login.html"></div>
 		<script>
+			var count = window.localStorage;
+			$(document).ready(function() {
+				$("#sign").text(count.getItem("sign"));
+				$.ajax({
+					url: "/getWord",
+					type: "POST",
+                    data: {key: "test"},
+					dataType: "json",
+					success: function(data){
+						$("#test_chinese").text(data["chinese"]);
+						$("#h_english").text(data["english"]);
+					}
+				})
+			});
 			/* 盲式英文学习 */
 			$('#input_en').on('blur', function() {
 				if ($(this).val() == "") {
 					$('#tip_en').text("请输入英文");
 				}
 			});
-			$('#eform').submit(function() {
-				if ($(this).val() == "") {
+			$('.next_test').click(function() {
+				if ($("#input_en").val() == "") {
 					$('#tip_en').text("请输入英文");
 					return false;
 				}
-				return true;
+				if ($("#input_en").val() != $("#h_english").text()) {
+					$('#tip_en').text("输入错误");
+					return false;
+				}
+
+				/* 每次操作记录挑战单词数和正确数 */
+				count.setItem("correctSum",parseInt(count.getItem("correctSum"))+1);
+				count.setItem("sign",parseInt(count.getItem("sign"))+1);
+				$("#sign").text(count.getItem("sign"));
+				/* 判断挑战单词数是否为最大值 */
+				if (count.getItem("sign") == "20") {
+					$("#sign").text("20");
+					var correctNum = parseInt(count.getItem("correctSum"));
+					if (correctNum == 20) {
+						alert("非常棒，全部答对");
+					} else if (correctNum >= 16) {
+						alert("真棒，答对" + correctNum + "个");
+					} else if (correctNum >= 12) {
+						alert("还不错，答对" + correctNum + "个");
+					} else {
+						alert("加把劲，答对" + correctNum + "个");
+					}
+					window.location.href="testwords_s.html";
+					return;
+				}
+
+				/*移除并从redis中得到单词*/
+				$.ajax({
+					url: "/getAndRemoveWord",
+					type: "POST",
+					dataType: "json",
+                    data: {key: "test"},
+					success: function(data){
+						$("#test_chinese").text(data["chinese"]);
+						$("#h_english").text(data["english"]);
+						$('#tip_en').text("");
+						$("#input_en").val("");
+					}
+				});
+				return false;
 			});
-			$("#tip_en2").click(function() {
-				$("#tip_en2").popover('show');
+
+			/* 不认识，跳过 */
+			$("#next").click(function() {
+				count.setItem("sign",parseInt(count.getItem("sign"))+1);
+				$("#sign").text(count.getItem("sign"));
+				if (count.getItem("sign") == "20") {
+					$("#sign").text("20");
+					var correctNum = parseInt(count.getItem("correctSum"));
+					if (correctNum == 20) {
+						alert("非常棒，全部答对");
+					} else if (correctNum >= 16) {
+						alert("真棒，答对" + correctNum + "个");
+					} else if (correctNum >= 12) {
+						alert("还不错，答对" + correctNum + "个");
+					} else {
+						alert("加把劲，答对" + correctNum + "个");
+					}
+					window.location.href="testwords_s.html";
+					return;
+				}
+
+				/*移除并从redis获得单词*/
+				$.ajax({
+					url: "/getAndRemoveWord",
+					type: "POST",
+					dataType: "json",
+                    data: {key: "test"},
+					success: function(data){
+						$("#test_chinese").text(data["chinese"]);
+						$("#h_english").text(data["english"]);
+						$('#tip_en').text("");
+						$("#input_en").val("");
+					}
+				});
 			});
+
+			/* 退出清除localStorage */
+			$(".stu").click(function() {
+				count.clear();
+				$.ajax({
+                   url: "/clearAll",
+                   type: "POST",
+                   data: {key: "test"}
+                });
+			})
 		</script>
 	</body>
 

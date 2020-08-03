@@ -27,13 +27,14 @@ public class LoginController {
     private UserService userService;
 
     @PostMapping("/login")
-    public Map<String, String> loginCheck(User user, HttpServletResponse response, HttpServletRequest request) throws IOException {
+    public Map<String, String> loginCheck(User user, HttpServletResponse response) {
         Map<String, String> map = new HashMap<>();
         user = userService.queryByUser(user);
+        //用户不为空，登录成功,设置状态码为1
         if (user != null) {
             map.put("status", "1");
-            //设置session
-
+            //设置用户权限，如果是1则是管理员，0为用户，前端控制跳转页面
+            map.put("sign", user.getSign().toString());
             //设置cookie
             Cookie cookie = new Cookie("userid", user.getId().toString());
             cookie.setMaxAge(60*60*24);
@@ -44,10 +45,18 @@ public class LoginController {
 
             return map;
         }
+        //用户为空，设置状态码为2
         map.put("status", "2");
         return map;
     }
 
+    /**
+     * 用户退出操作
+     *
+     * @param request
+     * @param response
+     * @return
+     */
     @PostMapping("/exit")
     public String exit(HttpServletRequest request, HttpServletResponse response) {
         //清除session

@@ -37,6 +37,7 @@
 					<form action="/ukwords/search/1" method="post">
 						<div class="input-group wordsearch">
 							<input type="text" class="form-control" placeholder="search for word" name="english">
+							<input type="hidden" name="sign" value="2">
 							<span class="input-group-btn">
 								<button class="btn btn-default" type="submit">查询</button>
 							</span>
@@ -56,7 +57,7 @@
 							<td th:text="${wordStat.count}">1</td>
 							<td th:text="${word.english}">dog</td>
 							<td th:text="${word.chinese}">狗</td>
-							<td><a href="#"  th:href="@{/addKnow(id=${word.id},pageNum=${words.pageNum})}" id="addKnow">加入掌握</a></td>
+							<td><a href="javascript:void(0);"  th:href="@{/addKnow(id=${word.id},pageNum=${words.pageNum})}" class="addKnow">加入掌握</a></td>
 							<td>
 								<a href="javascript:void(0);" class="u_word2" th:id="${word.id}">修改</a> | <a href="javascript:void(0);" th:attr="del_uri=@{/word/} + ${word.id}" class="d_word2">删除</a>
 							</td>
@@ -157,7 +158,7 @@
 				$("#screen").hide();
 				$("#deuk_word").hide();
 			});
-			$("#addKnow").click(function () {
+			$(".addKnow").click(function () {
                alert("加入成功");
             });
 		</script>

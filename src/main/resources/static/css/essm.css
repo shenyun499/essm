@@ -160,11 +160,12 @@ a:focus {
 	margin-top: -5px;
 }
 
-.study_cont {
+.study_contd {
 	width: 100%;
 	height: 70%;
 	margin: auto;
-	padding: 0 2rem 0 2rem;
+	padding: 0 0.5rem 0 0.5rem;
+	margin-top: 10px;
 }
 
 .study_contd span {

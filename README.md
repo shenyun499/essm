@@ -1,12 +1,12 @@
 ## project_versions
 v1.0初始版本
-add by master
+add by master 主分支-稳定版本
 
 ## project_theme
 essm：Easy study system platform (易学习平台)
 
 ## project_desc
-毕业设计项目主分支
+毕业设计项目
 易学习平台为了让更多人学好英语，通过有趣而又灵活的多种方式来给需要学习英语的人提供了更多学习英语的方式，能够促进英语教育的发展。
 JAVA+ SpringBoot2.26框架 + MySQL5.6.43 + JDK1.8 + windows10环境下完成易学习平台功能的开发实现。
 功能

@@ -32,9 +32,6 @@
           id, pid, chinese, english, sign
         from essm.essm_word
         <where>
-            <if test="id != null">
-                and id = #{id}
-            </if>
             <if test="pid != null">
                 and pid = #{pid}
             </if>
@@ -87,6 +84,22 @@
     <!--通过主键删除-->
     <delete id="deleteById">
         delete from essm.essm_word where id = #{id}
+    </delete>
+
+    <!-- 随机查询，在掌握库和非掌握库中 -->
+    <select id="queryByKnumAndUknum" resultMap="WordMap">
+        SELECT
+          id, pid, chinese, english, sign
+        FROM
+          (SELECT * FROM essm.essm_word WHERE pid=#{userId} AND sign=1 ORDER BY RAND() LIMIT #{knum}) t1
+        UNION ALL
+        SELECT * FROM
+          (SELECT * FROM essm.essm_word WHERE pid=#{userId} AND sign=2 ORDER BY RAND() LIMIT #{uknum}) t2
+    </select>
+
+    <!-- 格式化个人库 -->
+    <delete id="deleteAllWord">
+        delete from essm_word where pid=#{userId}
     </delete>
 
 </mapper>

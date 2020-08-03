@@ -28,11 +28,12 @@
 	<div class="d_content" id="d_reg">
 		<form action="#" method="post" id="rform">
 			<span class="d_tip" id="t_reg"></span>
-			<div class="d_input d_inputt"><input type="text" name="username" id="r_username" value="" placeholder="用户名" /></div>
-			<div class="d_input d_inputd"><input type="password" name="password" id="r_password" value="" placeholder="密码" /></div>
+			<div class="d_input d_inputt"><input type="text" name="username" id="r_username" value="" autocomplete="off" placeholder="用户名" /></div>
+			<div class="d_input d_inputd"><input type="password" name="password" id="r_password" autocomplete="off" value="" placeholder="密码" /></div>
 			<div class="d_input d_inpute"><input type="email" name="email" id="email" value="" placeholder="邮箱" /></div>
-			<div class="d_input d_inputy"><input type="text" name="checknum" id="checknum" value="" placeholder="验证码" /></div>
-			<div class="d_submit"><input type="submit" name="submit" id="r_submit" value="注册" /></div>
+			<input type="hidden" name="sign" value="0" class="form-control" id="sign">
+			<!--<div class="d_input d_inputy"><input type="text" name="checknum" id="checknum" value="" placeholder="验证码" /></div>-->
+			<div class="d_submit"><input type="submit" id="r_submit" value="注册" /></div>
 		</form>
 
 	</div>

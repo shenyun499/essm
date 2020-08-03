@@ -30,10 +30,12 @@ public class MyInterceptor implements HandlerInterceptor {
             return false;
         } else {
             for (Cookie cookie : cookies) {
+                //cookie存在userid则用户已经登录
                 if ("userid".equals(cookie.getName())) {
                     return true;
                 }
             }
+            //用户未登录，拦截
             return false;
         }
     }

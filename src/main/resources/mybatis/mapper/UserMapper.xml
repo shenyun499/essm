@@ -24,6 +24,9 @@
           id, username, password, email, sign
         from essm.essm_user
         <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
             <if test="username != null">
                 and username = #{username}
             </if>
@@ -46,23 +49,6 @@
         select
           id, username, password, email, sign
         from essm.essm_user
-        <where>
-            <if test="id != null">
-                and id = #{id}
-            </if>
-            <if test="username != null and username != ''">
-                and username = #{username}
-            </if>
-            <if test="password != null and password != ''">
-                and password = #{password}
-            </if>
-            <if test="email != null and email != ''">
-                and email = #{email}
-            </if>
-            <if test="sign != null">
-                and sign = #{sign}
-            </if>
-        </where>
     </select>
 
     <!--新增所有列-->

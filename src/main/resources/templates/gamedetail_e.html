@@ -31,16 +31,14 @@
 			<div class="study">
 				<h3>英文接龙</h3>
 				<a href="gamechoose_e.html" class="btn btn-info stu">放弃挑战</a>
-				<a style="text-decoration: none;" class="btn btn-warning g_status">完成指标<span>3/15</span>个</a>
+				<a style="text-decoration: none;" class="btn btn-warning g_status">完成指标<span id="finish_en" style="color: red;"></span>/15个</a>
 				<p id="time">15</p>
 				<div class="input-group game_cont">
-					<h4 style="margin-left: 0.25rem;">中文</h4>
-					<!-- <form method="post" id="gform"> -->
+					<h4 style="margin-left: 0.25rem;" id="show_ch"></h4>
 						<input tabindex="0" type="text" class="form-control" placeholder="请输入英文" aria-label="Recipient's username" aria-describedby="button-addon2"
-						 id="input_en2" role="button" data-toggle="popover" data-trigger="focus" title="输入英文错误"/>
-						<!-- <span style="display: block;color: #FF0000;font-weight: bold;height: 34px;line-height: 34px;text-align: center;font-size: 12px;" id="tip_en"></span> -->
-						<a tabindex="0" style="text-decoration: none;margin-top: 1rem;" class="btn btn-primary" id="c_next2" role="button" data-toggle="popover" data-trigger="focus" title="输入中文错误">下一个</a>
-					<!-- </form> -->
+						 id="input_en" role="button" autocomplete="off" style="width: 75%">
+						<span style="display: none;color: #FF0000;font-weight: bold;height: 34px;line-height: 34px;text-align: center;font-size: 12px;" id="tip_en">输入错误</span>
+						<a tabindex="0" style="text-decoration: none;margin-top: 1rem;" class="btn btn-primary" id="e_next" role="button">下一个</a>
 				</div>
 			</div>
 
@@ -49,7 +47,20 @@
 		<!--登录-->
 		<div class="include" file="login.html"></div>
 		<!-- 倒计时 -->
-		<script>
+		<script type="application/javascript">
+			var storage = window.localStorage;
+			$(document).ready(function () {
+				$("#finish_en").text(storage.getItem("sign"));
+				$.ajax({
+					url: "/getWord",
+					type: "POST",
+					dataType: "json",
+					data: {key: "game"},
+					success: function(data){
+						$("#show_ch").text(data["chinese"]);
+					}
+				});
+			});
 			var stopCountDown = null;
 			/* 定时器函数 */
 			function timer(time) {
@@ -70,22 +81,55 @@
 				}
 			};
 			timer(14);
-			/* 刷新计数器 */
-			$("#c_next2").click(function() {
-				/* ajxa */
-				if ($("#input_en2").val() == "english") {
-					clearInterval(stopCountDown);
-					alert("重置定时器");
-					timer(15);
-				} else {
-					$("#input_en2").popover('show');
-				}
+			$("#e_next").click(function() {
+				/*从redis中得到单词*/
+				$.ajax({
+					url: "/getWord",
+					type: "POST",
+					dataType: "json",
+					data: {key: "game"},
+					success: function(data){
+						if ($("#input_en").val() == data["english"]) {
+							$("#show_ch").text(data["chinese"]);
+							/* 记录+1 */
+							storage.setItem("sign",parseInt(storage.getItem("sign"))+1);
+							$("#finish_en").text(storage.getItem("sign"));
+							if (storage.getItem("sign") == "15") {
+								$("#sign").text("15");
+								alert("恭喜你挑战通关");
+								window.location.href="gamechoose_e.html";
+								return;
+							}
+
+							/* 移除单词并查询 */
+							$.ajax({
+								url: "/getAndRemoveWord",
+								type: "POST",
+								dataType: "json",
+								data: {key: "game"},
+								success: function(data){
+									$("#show_ch").text(data["chinese"]);
+									$("#input_en").val("");
+								}
+							});
+							clearInterval(stopCountDown);
+							timer(15);
+						} else {
+							$("#tip_en").show();
+						}
+					}
+				});
 			});
-			$("#input_en2").focus(function() {
-				$("#input_en2").popover('hide');
+			$("#input_en").focus(function() {
+				$("#tip_en").hide();
 			});
 			/* 放弃挑战 */
 			$(".stu").click(function() {
+				$.ajax({
+					url: "/clearAll",
+					type: "POST",
+					data: {key: "game"}
+				});
 				alert("很遗憾，您放弃了挑战!");
 			});
 		</script>

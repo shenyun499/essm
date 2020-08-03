@@ -43,12 +43,19 @@ public class PlainController {
         return plainService.queryByDate(plain);
     }
 
+    /**
+     * 制定计划功能实现
+     *
+     * @param request
+     * @param plain
+     * @return
+     */
     @RequestMapping("/add")
     public String addPlain(HttpServletRequest request, Plain plain) {
         Integer userId = cookieUtils.getUserIdByCookie(request.getCookies());
         plain.setPid(userId);
         plainService.update(plain);
-        return "/planmodule.html";
+        return "redirect:/planmodule.html";
     }
 
 }

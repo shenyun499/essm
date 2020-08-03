@@ -103,4 +103,22 @@ public interface WordService {
      * @return
      */
     PageInfo<Word> searchWordByPageS(Integer pageNum, int pageSize, Word word);
+
+    /**
+     * 初始化单词放入redis中--盲式英文学习、挑战接龙、测测实力
+     *
+     * @param userId 用户编号
+     * @param knum 掌握单词数
+     * @param uknum 非掌握单词数
+     * @param key redis的key
+     */
+    void studyModule(Integer userId, int knum, int uknum, String key);
+
+    /**
+     * 格式化个人库操作
+     *
+     * @param userId
+     * @param password
+     */
+    Integer deleteAllWord(Integer userId, String password);
 }

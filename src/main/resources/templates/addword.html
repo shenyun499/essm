@@ -37,12 +37,12 @@
 					<form class="form-inline" method="post" action="#" th:action="@{/word}" id="aform">
 						<div class="form-group">
 							<!--<label class="sr-only" for="exampleInputEmail3">English</label>-->
-							<input type="text" class="form-control input-lg" value="" id="english" placeholder="English" th:name="english">
+							<input type="text" class="form-control input-lg" value="" id="english" placeholder="English" th:name="english" autocomplete="off">
 						</div>
 						<br /><br />
 						<div class="form-group">
 							<!--<label class="sr-only" for="exampleInputPassword3">Chinese</label>-->
-							<input type="text" class="form-control input-lg" value="" id="chinese" placeholder="Chinese" th:name="chinese">
+							<input type="text" class="form-control input-lg" value="" id="chinese" placeholder="Chinese" th:name="chinese" autocomplete="off">
 						</div>
 						<br /><br />
 						<input type="submit" class="btn btn-default btn-lg" value="添加">

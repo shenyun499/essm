@@ -28,45 +28,20 @@ public class EssmMvcConfig implements WebMvcConfigurer {
         registry.addViewController("/essm.html").setViewName("index");
         registry.addViewController("/essm").setViewName("index");
 
-        //引入页面跳转
-        registry.addViewController("/schedule.html").setViewName("schedule");
-        registry.addViewController("/login.html").setViewName("login");
-        registry.addViewController("/header.html").setViewName("header");
-
-        /*registry.addViewController("/kwords/list/schedule.html").setViewName("schedule");
-        registry.addViewController("/kwords/list/login.html").setViewName("login");
-        registry.addViewController("/kwords/list/header.html").setViewName("classpath:/header");*/
-
-        //学习模块页面跳转
-        registry.addViewController("/planmodule.html").setViewName("planmodule");
-        registry.addViewController("/studymodule.html").setViewName("studymodule");
-        registry.addViewController("/gamemodule.html").setViewName("gamemodule");
-        registry.addViewController("/testwords_s.html").setViewName("testwords_s");
-
-        //导航栏页面跳转
-        registry.addViewController("/plibrary.html").setViewName("plibrary");
-        registry.addViewController("/knowwords.html").setViewName("knowwords");
-        registry.addViewController("/unknowwords.html").setViewName("unknowwords");
-        registry.addViewController("/introduction.html").setViewName("introduction");
-
-        //个人库页面跳转
-        registry.addViewController("/addword.html").setViewName("addword");
 
         //addViewControllers可以方便的实现一个请求直接映射成视图，而无需书写controller
         //registry.addViewController("请求路径").setViewName("请求页面文件路径")
-        /*try{
+        try{
             for(StaticPagePathFinder.PagePaths pagePaths :staticPagePathFinder.findPath()){
                 String urlPath = pagePaths.getUrlPath();
-                *//*System.out.println(pagePaths.getUrlPath());
-                System.out.println(pagePaths.getFilePath());*//*
                 registry.addViewController(urlPath+".html").setViewName(pagePaths.getFilePath());
-                if(!urlPath.isEmpty()){
+                if(!urlPath.isEmpty()) {
                     registry.addViewController(urlPath).setViewName(pagePaths.getFilePath());
                 }
             }
         }catch(IOException e){
             throw new RuntimeException("Unable to locate static pages:"+e.getMessage(),e);
-        }*/
+        }
 
     }
 

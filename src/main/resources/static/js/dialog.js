@@ -1,4 +1,8 @@
 $(function() {
+	/*$.ajaxSetup({
+		cache: false
+	});*/
+
 	//使用jQuery的load方法，将页面加载进来
 	$(".include").each(function() {
 		if(!!$(this).attr("file")) {
@@ -71,6 +75,9 @@ $(function() {
 					$('#user_btn').text($.cookie("username"));
 					$('#user_btn').css("display","inline");
 					alert("登录成功");
+					if (data["sign"] == "1") {
+						window.location.href="/admin";
+					}
 				} else if (result == 2) {
 					$('#d_tip').text("用户名或者密码错误!");
 					$('#d_tip').css('color', 'red');
@@ -160,12 +167,27 @@ $(function() {
 			alert("邮箱不能为空！");
 			return false;
 		}
-		var c4 = checkRDataY();
+		/*var c4 = checkRDataY();
 		if (!c4) {
 			alert("验证码不能为空！");
 			return false;
 		}
-		return true;
+		*/
+		$.ajax({
+			url: "/user",
+			type: "POST",
+			data: {
+				username: $('#r_username').val(),
+				password: $('#r_password').val(),
+				email: $('#email').val(),
+				sign: $('#sign').val(),
+			},
+			success: function (status) {
+				alert(status);
+				alert("注册成功");
+			}
+		});
+		return false;
 	});
 	//禁止选中对话框内容
 	if (document.attachEvent) { //ie的事件监听，拖拽div时禁止选中内容，firefox与chrome已在css中设置过-moz-user-select: none; -webkit-user-select: none;
@@ -235,13 +257,17 @@ $(function() {
 					sign: "1"
 				},
 				success: function (data) {
-					$("#aws").text(data["addWordNums"] + "/" + data["addWordNum"]);
-					$("#kws").text(data["knowWordNums"] + "/" + data["knowWordNum"]);
-					$("#sws").text(data["studyNums"] + "/" + data["studyNum"]);
-					$("#gws").text(data["gameNums"] + "/" + data["gameNum"]);
+					$("#plainst").show();
+					var t1 = parseInt(data["addWordNums"]) > parseInt(data["addWordNum"]) ? parseInt(data["addWordNum"]) :parseInt(data["addWordNums"]);
+					var t2 = parseInt(data["knowWordNums"]) > parseInt(data["knowWordNum"]) ? parseInt(data["knowWordNum"]) :parseInt(data["knowWordNums"]);
+					var t3 = parseInt(data["studyNums"]) > parseInt(data["studyNum"]) ? parseInt(data["studyNum"]) :parseInt(data["studyNums"]);
+					var t4 = parseInt(data["gameNums"]) > parseInt(data["gameNum"]) ? parseInt(data["gameNum"]) :parseInt(data["gameNums"]);
+					$("#aws").text( t1 + "/" + data["addWordNum"]);
+					$("#kws").text(t2 + "/" + data["knowWordNum"]);
+					$("#sws").text(t3 + "/" + data["studyNum"]);
+					$("#gws").text(t4 + "/" + data["gameNum"]);
 				},
 				error: function (status) {
-					$("#plainst").hide();
 					$("#noplain").show();
 				}
 			});

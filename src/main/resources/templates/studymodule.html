@@ -33,10 +33,10 @@
 				<div class="col-md-3">
 				</div>
 				<div class="col-md-3">
-					<a href="studydetail_c.html" class="mybtn">盲<br/>式<br/>中<br/>文<br/>(简单)</a>
+					<a href="javascript:void(0);" id="start_ch" class="mybtn">盲<br/>式<br/>中<br/>文<br/>(简单)</a>
 				</div>
 				<div class="col-md-3">
-					<a href="studydetail_e.html" class="mybtn">盲<br/>式<br/>英<br/>文<br/>(困难)</a>
+					<a href="javascript:void(0);" id="study_eng" class="mybtn">盲<br/>式<br/>英<br/>文<br/>(困难)</a>
 				</div>
 				<div class="col-md-3">
 				</div>
@@ -46,6 +46,35 @@
 
 		<!--登录-->
 		<div class="include" file="login.html"></div>
+		<script type="application/javascript">
+			$("#study_eng").click(function () {
+				/* 初始化 */
+				var storage = window.localStorage;
+				storage.setItem("sign", 0);
+				$.ajax({
+					url: "/study/start",
+					type: "POST",
+					success:function () {
+						window.location.href="studydetail_e.html";
+					}
+				});
+			});
+			//获取看有没有记录
+			$("#start_ch").click(function () {
+				$.ajax({
+					url: "/getsign",
+					type: "POST",
+					dataType: "text",
+					success: function (data) {
+						if (data != null) {
+							window.location.href="/studys/list/" + data;
+							return;
+						}
+						window.location.href="/studys/list/1";
+					}
+				});
+			})
+		</script>
 	</body>
 
 </html>

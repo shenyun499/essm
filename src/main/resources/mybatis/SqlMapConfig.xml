@@ -4,9 +4,9 @@
 		"http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<!-- mybatis插件配置 -->
-	<plugins>
+	<!--<plugins>
 		<plugin interceptor="com.github.pagehelper.PageHelper">
-			<!-- 设置数据库类型 Oracle,Mysql,MariaDB,SQLite,Hsqldb,PostgreSQL六种数据库-->
+			&lt;!&ndash; 设置数据库类型 Oracle,Mysql,MariaDB,SQLite,Hsqldb,PostgreSQL六种数据库&ndash;&gt;
 			<property name="dialect" value="mysql"/>
 			<property name="offsetAsPageNum" value="false"/>
 			<property name="rowBoundsWithCount" value="false"/>
@@ -15,7 +15,7 @@
 			<property name="supportMethodsArguments" value="true"/>
 			<property name="returnPageInfo" value="none"/>
 		</plugin>
-	</plugins>
+	</plugins>-->
 
 	<!--
 		或者在application.properties中配置也可以，配置规则如下：
