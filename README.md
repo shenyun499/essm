@@ -1,6 +1,6 @@
 ##project_versions
 v1.0.0初始版本
-add by master
+add by devlop：开发分支，所有功能的集成，可以直接运行项目
 
 ##project_theme
 essm：Easy study system platform (易学习平台)
