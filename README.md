@@ -1,7 +1,11 @@
 ## project_versions
 v1.1升级版本
-add by feature/versions/v1_1：版本分支，所有功能的集成
+add by feature/v1_1/graduation_use_themeleaf_dto：版本分支，功能修改分支
 版本为1.1，对1.0进行版本升级，继续维护
+
+## project_update_target
+版本1.1更新
+1、引入dto、do
 
 ## project_theme
 essm：Easy study system platform (易学习平台)
