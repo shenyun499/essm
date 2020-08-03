@@ -1,5 +1,5 @@
 ##project_versions
-v1.0.0初始版本
+v1.0初始版本
 add by master
 
 ##project_theme
