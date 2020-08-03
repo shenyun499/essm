@@ -1,14 +1,14 @@
 ##project_versions
 v1.0.0初始版本
-add by feature/v1_0_0/graduation_use_thymeleaf：版本分支，功能分支，这里暂时没有对功能进行详细分支，后续再进行
-v1_0_0：初始版本为1.0.0，为毕业设计的最初完成版本，后续需要对它进行维护，进行版本升级。
+add by feature/v1_0/graduation_use_thymeleaf：版本分支，功能分支，这里暂时没有对功能进行详细分支，后续再进行
+v1_0：初始版本为1.0，为毕业设计的最初完成版本，后续需要对它进行维护，进行版本升级。
 graduation_use_thymeleaf：项目功能描述，使用thymeleaf开发的毕业设计项目。
 
 ##project_theme
 essm：Easy study system platform (易学习平台)
 
 ## project_desc
-毕业设计项目主分支
+毕业设计项目
 易学习平台为了让更多人学好英语，通过有趣而又灵活的多种方式来给需要学习英语的人提供了更多学习英语的方式，能够促进英语教育的发展。
 **功能**
 1、用户模块：提供三种形式的访问，分别针对用户登录访问和系统管理员登录访问设置不同的权限；
