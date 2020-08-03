@@ -1,14 +1,14 @@
 ## project_versions
-v1.0初始版本
-add by devlop：开发分支，所有功能的集成，可以直接运行项目
+v1.1升级版本
+add by feature/versions/v1_1：版本分支，所有功能的集成
+版本为1.1，对1.0进行版本升级，继续维护
 
 ## project_theme
 essm：Easy study system platform (易学习平台)
 
 ## project_desc
-毕业设计项目主分支
+毕业设计项目
 易学习平台为了让更多人学好英语，通过有趣而又灵活的多种方式来给需要学习英语的人提供了更多学习英语的方式，能够促进英语教育的发展。
-JAVA+ SpringBoot2.26框架 + MySQL5.6.43 + JDK1.8 + windows10环境下完成易学习平台功能的开发实现。
 功能
 1、用户模块：提供三种形式的访问，分别针对用户登录访问和系统管理员登录访问设置不同的权限；
 2、权限模块：通过权限限制访问
@@ -20,3 +20,5 @@ JAVA+ SpringBoot2.26框架 + MySQL5.6.43 + JDK1.8 + windows10环境下完成易�
 4、库模块：系统的特色是单词库模块是属于自己的，所有针对学习的单词是需要自己进行输入；
 
 ## dev_desc
+当前版本使用技术：JAVA+ SpringBoot2.26框架 + MySQL5.6.43 + JDK1.8 + windows10环境下完成易学习平台功能的开发实现。
+前端界面使用的是HTML，后端采用Thymeleaf模板引擎，前后端交互采用JQ；后期改进应该彻底前后端分离
