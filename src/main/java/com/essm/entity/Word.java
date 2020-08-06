@@ -1,7 +1,5 @@
 package com.essm.entity;
 
-import lombok.Data;
-
 import java.io.Serializable;
 
 /**
@@ -10,7 +8,6 @@ import java.io.Serializable;
  * @author xuexue
  * @since 2020-05-23 20:01:42
  */
-@Data
 public class Word implements Serializable {
     private static final long serialVersionUID = 990276661871368400L;
     /**
@@ -34,4 +31,58 @@ public class Word implements Serializable {
     */
     private Integer sign;
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getPid() {
+        return pid;
+    }
+
+    public void setPid(Integer pid) {
+        this.pid = pid;
+    }
+
+    public String getChinese() {
+        return chinese;
+    }
+
+    public void setChinese(String chinese) {
+        this.chinese = chinese;
+    }
+
+    public String getEnglish() {
+        return english;
+    }
+
+    public void setEnglish(String english) {
+        this.english = english;
+    }
+
+    public Integer getSign() {
+        return sign;
+    }
+
+    public void setSign(Integer sign) {
+        this.sign = sign;
+    }
+
+    @Override
+    public String toString() {
+        return "Word{" +
+                "id=" + id +
+                ", pid=" + pid +
+                ", chinese='" + chinese + '\'' +
+                ", english='" + english + '\'' +
+                ", sign=" + sign +
+                '}';
+    }
 }

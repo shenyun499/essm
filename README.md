@@ -5,7 +5,7 @@ add by feature/v1_1/graduation_use_themeleaf_dto：版本分支，功能修改�
 
 ## project_update_target
 版本1.1更新
-1、引入dto、do
+1、引入dto、do功能，对原本的接口进行改造
 
 ## project_theme
 essm：Easy study system platform (易学习平台)
@@ -26,3 +26,30 @@ essm：Easy study system platform (易学习平台)
 ## dev_desc
 当前版本使用技术：JAVA+ SpringBoot2.26框架 + MySQL5.6.43 + JDK1.8 + windows10环境下完成易学习平台功能的开发实现。
 前端界面使用的是HTML，后端采用Thymeleaf模板引擎，前后端交互采用JQ；后期改进应该彻底前后端分离
+
+  #数据库配置
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.0:3306/essm_dev?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8&useSSL=false
+    username: root
+    password: 123456
+    initialSize: 5   #初始化时建立物理连接的个数
+    minIdle: 5    #最小连接池数量
+    maxActive: 20   #最大连接池数量
+    maxWait: 60000    #获取连接时最大等待时间
+    timeBetweenEvictionRunsMillis: 60000    #Destory线程检测连接的间隔时间
+    minEvictableIdleTimeMillis: 300000    #连接保持空闲而不被驱逐的最长时间
+    testWhileIdle: true
+    validationQuery: SELECT 1    #检测连接是否有效的sql
+    testOnBorrow: false   #申请连接时执行validationQuery检测连接是否有效
+    testOnReturn: false    #归还连接时执行validationQuery检测连接是否有效
+    poolPreparedStatements: true   #是否缓存preparedStatements
+
+    #配置监控统计拦截的filters，stat:监控统计、log4j：日志记录、wall：防御sql注入
+    #如果允许时报错  java.lang.ClassNotFoundException: org.apache.log4j.Priority
+    #则导入 log4j 依赖即可
+    filters: stat,wall,log4j
+    maxPoolPreparedStatementPerConnectionSize: 20
+    useGlobalDataSourceStat: true
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500

@@ -1,7 +1,5 @@
 package com.essm.entity;
 
-import lombok.Data;
-
 import java.io.Serializable;
 
 /**
@@ -10,7 +8,6 @@ import java.io.Serializable;
  * @author makejava
  * @since 2020-06-03 15:19:09
  */
-@Data
 public class Plain implements Serializable {
     private static final long serialVersionUID = -52347099743701825L;
     /**
@@ -53,4 +50,122 @@ public class Plain implements Serializable {
     private Integer studyNums;
     
     private Integer gameNums;
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getPid() {
+        return pid;
+    }
+
+    public void setPid(Integer pid) {
+        this.pid = pid;
+    }
+
+    public Integer getAddWordNum() {
+        return addWordNum;
+    }
+
+    public void setAddWordNum(Integer addWordNum) {
+        this.addWordNum = addWordNum;
+    }
+
+    public Integer getKnowWordNum() {
+        return knowWordNum;
+    }
+
+    public void setKnowWordNum(Integer knowWordNum) {
+        this.knowWordNum = knowWordNum;
+    }
+
+    public Integer getStudyNum() {
+        return studyNum;
+    }
+
+    public void setStudyNum(Integer studyNum) {
+        this.studyNum = studyNum;
+    }
+
+    public Integer getGameNum() {
+        return gameNum;
+    }
+
+    public void setGameNum(Integer gameNum) {
+        this.gameNum = gameNum;
+    }
+
+    public Integer getSign() {
+        return sign;
+    }
+
+    public void setSign(Integer sign) {
+        this.sign = sign;
+    }
+
+    public Integer getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Integer createTime) {
+        this.createTime = createTime;
+    }
+
+    public Integer getAddWordNums() {
+        return addWordNums;
+    }
+
+    public void setAddWordNums(Integer addWordNums) {
+        this.addWordNums = addWordNums;
+    }
+
+    public Integer getKnowWordNums() {
+        return knowWordNums;
+    }
+
+    public void setKnowWordNums(Integer knowWordNums) {
+        this.knowWordNums = knowWordNums;
+    }
+
+    public Integer getStudyNums() {
+        return studyNums;
+    }
+
+    public void setStudyNums(Integer studyNums) {
+        this.studyNums = studyNums;
+    }
+
+    public Integer getGameNums() {
+        return gameNums;
+    }
+
+    public void setGameNums(Integer gameNums) {
+        this.gameNums = gameNums;
+    }
+
+    @Override
+    public String toString() {
+        return "Plain{" +
+                "id=" + id +
+                ", pid=" + pid +
+                ", addWordNum=" + addWordNum +
+                ", knowWordNum=" + knowWordNum +
+                ", studyNum=" + studyNum +
+                ", gameNum=" + gameNum +
+                ", sign=" + sign +
+                ", createTime=" + createTime +
+                ", addWordNums=" + addWordNums +
+                ", knowWordNums=" + knowWordNums +
+                ", studyNums=" + studyNums +
+                ", gameNums=" + gameNums +
+                '}';
+    }
 }

@@ -1,0 +1,17 @@
+#spring名称
+spring :
+  application :
+    name : essm
+
+#服务器启动位置
+server :
+  port : 8088
+
+#logging configuration
+logging:
+  config: classpath:config/logback-spring.xml
+  level:
+    root: info
+
+##bootstrap启动优先于application.yml，可以在这里配置以上这些东西 单独使用 springboot 组件时，bootstrap.yml 配置文件无法生效?
+##解决方案: springboot 本身不支持，需要和 springcloud 组件结合，加上 spring cloud context 依赖即可。

@@ -1,0 +1,90 @@
+<configuration>
+  <springProperty scope="context" name="appName" source="spring.application.name" defaultValue="appName"/>
+  <springProperty scope="context" name="rootLevel" source="kont.logger.level" defaultValue="INFO"/>
+  <springProperty scope="context" name="kont.log.path" source="kont.log.path" defaultValue="INFO"/>
+  
+  <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${kont.log.path}/kont-${appName}.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <fileNamePattern>${kont.log.path}/kont-${appName}-%d{yyyyMMdd}.%i.log</fileNamePattern>
+      <maxFileSize>20MB</maxFileSize>
+    </rollingPolicy>
+    <encoder>
+      <pattern>%d %-5level [%-18.18thread] %-36logger{36} - [%X{requestId:-SYSTEM}]: %msg%n</pattern>
+    </encoder>
+  </appender>
+  
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <!-- 该Filter 不要配置到生产，仅仅用于调试环境，用于禁止eureka订阅服务日志干扰调试 
+    <filter class="com.hisun.kont.framework.log.logback.TestFilter" />
+    -->
+    <encoder>
+      <pattern>%d %-5level [%-18.18thread] %-36logger{36} - [%X{requestId:-SYSTEM}]: %msg%n</pattern>
+    </encoder>
+  </appender>
+  
+  <appender name="ERROR-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${kont.log.path}/error-${appName}.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <fileNamePattern>${kont.log.path}/error-${appName}-%d{yyyyMMdd}.%i.log</fileNamePattern>
+      <maxFileSize>20MB</maxFileSize>
+    </rollingPolicy>
+    <encoder>
+      <pattern>%d %-5level [%-18.18thread] %-36logger{36} - [%X{requestId:-SYSTEM}]: %msg%n</pattern>
+    </encoder>
+    <filter class="ch.qos.logback.classic.filter.LevelFilter">
+        <level>ERROR</level>  
+        <onMatch>ACCEPT</onMatch>  
+        <onMismatch>DENY</onMismatch>  
+    </filter>
+  </appender>
+  
+  <appender name="FILE-CLIENT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${kont.log.path}/client-${appName}.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <fileNamePattern>${kont.log.path}/client-${appName}-%d{yyyyMMdd}.%i.log</fileNamePattern>
+      <maxFileSize>20MB</maxFileSize>
+    </rollingPolicy>
+    <encoder>
+      <pattern>%d %-5level [%-18.18thread] - [%X{requestId:-SYSTEM}]: %msg%n</pattern>
+    </encoder>
+  </appender>
+  
+  <appender name="FILE-ACCESS" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${kont.log.path}/access-${appName}.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <fileNamePattern>${kont.log.path}/access-${appName}-%d{yyyyMMdd}.%i.log</fileNamePattern>
+      <maxFileSize>20MB</maxFileSize>
+    </rollingPolicy>
+    <encoder>
+      <pattern>%d %-5level [%-18.18thread] - [%X{requestId:-SYSTEM}]: %msg%n</pattern>
+    </encoder>
+  </appender>
+  
+  <logger name="com.hisun.kont.framework.springcloud.fegin" level="INFO" additivity="true">
+    <appender-ref ref="FILE-CLIENT"/>
+  </logger>
+  
+  <logger name="com.netflix.loadbalancer.LoadBalancerContext" level="INFO" additivity="true">
+    <appender-ref ref="FILE-CLIENT"/>
+  </logger>
+  
+  <logger name="com.hisun.kont.framework.aop.ControllerAspect$ReceiveRequestLog" level="INFO" additivity="true">
+    <appender-ref ref="FILE-ACCESS"/>
+  </logger>
+  
+  <logger name="org.springframework.amqp.rabbit.listener.BlockingQueueConsumer" level="INFO" additivity="false">
+    <appender-ref ref="FILE"/>
+    <appender-ref ref="STDOUT"/>
+  </logger>
+  
+  <root level="${rootLevel}">
+    <springProfile name="ci, dev, test, sit, uat, str, pre, prd">
+      <appender-ref ref="FILE"/>
+      <appender-ref ref="ERROR-FILE"/>
+    </springProfile>
+    <springProfile name="dev, test, uat, sit, prd, ci">
+      <appender-ref ref="STDOUT"/>
+    </springProfile>
+  </root>
+</configuration>

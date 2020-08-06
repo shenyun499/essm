@@ -1,6 +1,5 @@
 package com.essm.common;
 
-import lombok.Data;
 
 import java.io.Serializable;
 
@@ -10,7 +9,6 @@ import java.io.Serializable;
  * @Author xuexue
  * @Date 2020/6/13 15:14
  */
-@Data
 public class Result implements Serializable {
 
     //状态码
@@ -56,5 +54,29 @@ public class Result implements Serializable {
     }
     public static Result fail(String message) {
         return fail(400, message, null);
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
     }
 }
