@@ -5,7 +5,8 @@ add by feature/v1_1/graduation_use_themeleaf_dto：版本分支，功能修改�
 
 ## project_update_target
 版本1.1更新
-1、引入dto、do功能，对原本的接口进行改造
+1、引入新的阿里巴巴数据源
+2、引入dto、do功能，对原本的接口进行改造
 
 ## project_theme
 essm：Easy study system platform (易学习平台)
