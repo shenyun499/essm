@@ -3,43 +3,37 @@ spring:
   thymeleaf:
     cache: false
 
-#数据源配置，配置文件DruidConfig配置
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driverClassName: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/essm_dev?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8&useSSL=false
     username: essm_dev
     password: essm123456
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
-      # 初始化大小，最小，最大活跃数
-      initial-size: 8
-      min-idle: 8
-      max-active: 20
-      # 配置获取连接等待超时的时间，单位是毫秒
-      max-wait: 60000
-      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
-      time-between-eviction-runs-millis: 60000
-      # 配置一个连接在池中最小生存的时间，单位是毫秒
-      min-evictable-idle-time-millis: 30000
-      max-evictable-idle-time-millis: 300000
-      validation-query: SELECT 1
-      test-while-idle: true
-      test-on-borrow: false
-      test-on-return: false
-      # 打开PSCache，并且指定每个连接上PSCache的大小
-      pool-prepared-statements: true
-      max-pool-prepared-statement-per-connection-size: 20
-      #配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      initialSize: 8
+      minIdle: 8
+      maxActive: 500
+      maxWait: 60000
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      maxEvictableIdleTimeMillis: 6000
+      validationQuery: SELECT 1
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+      #filters: #配置多个英文逗号分隔(统计，sql注入，log4j过滤)
       filters: stat,wall,slf4j
-      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
-      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
-      # 配置监控服务器
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
       stat-view-servlet:
         enabled: true
         url-pattern: /druid/*
         reset-enable: true
         login-username: druid
         login-password: druid123
+        #2.0之后直接在这里配置数据库监控用户名密码。但是要加druid节点，上面
+
 
   #redis配置
   redis:
