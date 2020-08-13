@@ -2,11 +2,9 @@ package com.essm.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
-import com.alibaba.druid.support.http.WebStatFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
  * @date ：Create in 2020-08-04
  */
 
-@Configuration
+//@Configuration
 public class DruidConfig {
     private static final Logger logger = LoggerFactory.getLogger(DruidConfig.class);
     @Value("${spring.datasource.url}")
@@ -28,7 +26,7 @@ public class DruidConfig {
     private String username;
     @Value("${spring.datasource.password}")
     private String password;
-    @Value("${spring.datasource.driverClassName}")
+    @Value("${spring.datasource.driver-class-name}")
     private String driverClassName;
     @Value("${spring.datasource.druid.initial-size}")
     private int initialSize;
@@ -104,7 +102,7 @@ public class DruidConfig {
         srb.addInitParameter("loginUsername","root");
         srb.addInitParameter("loginPassword","root");
         //是否可以重置数据
-        srb.addInitParameter("resetEnable","true");
+        srb.addInitParameter("resetEnable","false");
         return srb;
     }
 
