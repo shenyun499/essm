@@ -10,7 +10,6 @@ import java.io.Serializable;
  * @author xuexue
  * @since 2020-05-23 20:08:05
  */
-@Data
 public class User implements Serializable {
     private static final long serialVersionUID = -68296714906509506L;
     /**
@@ -34,4 +33,47 @@ public class User implements Serializable {
     */
     private Integer sign;
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Integer getSign() {
+        return sign;
+    }
+
+    public void setSign(Integer sign) {
+        this.sign = sign;
+    }
 }
