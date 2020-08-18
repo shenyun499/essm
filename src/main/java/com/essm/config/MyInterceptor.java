@@ -26,7 +26,8 @@ public class MyInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         Cookie[] cookies = request.getCookies();
-        if (cookies == null) {
+        return true;
+        /*if (cookies == null) {
             return false;
         } else {
             for (Cookie cookie : cookies) {
@@ -36,7 +37,9 @@ public class MyInterceptor implements HandlerInterceptor {
                 }
             }
             //用户未登录，拦截
-            return false;
-        }
+            //return false;
+            //暂时全部通过
+            return true;
+        }*/
     }
 }

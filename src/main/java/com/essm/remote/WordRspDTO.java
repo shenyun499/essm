@@ -1,38 +1,37 @@
-package com.essm.entity;
-
-import java.io.Serializable;
+package com.essm.remote;
 
 /**
- * 单词表(Word)实体类
+ * 响应通用dto
  *
- * @author xuexue
- * @since 2020-05-23 20:01:42
+ * @author ：HUANG ZHI XUE
+ * @date ：Create in 2020-08-18
  */
-public class Word implements Serializable {
-    private static final long serialVersionUID = 990276661871368400L;
-    /**
-    * 单词编号，主键
-    */
+public class WordRspDTO {
+
+    /** 单词编号 */
     private Integer id;
-    /**
-    * 用户编号，外键，关联essm_user表的id
-    */
-    private Integer pid;
-    /**
-    * 单词中文
-    */
+
+    /** 用户编号 */
+    private Integer trl;
+
+    /** 单词中文 */
     private String chinese;
-    /**
-    * 单词英文
-    */
+
+    /** 单词英文 */
     private String english;
-    /**
-    * 单词状态位 1：已掌握 2：未掌握
-    */
+
+    /** 单词状态位 */
     private Integer sign;
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
+    public WordRspDTO() {
+    }
+
+    public WordRspDTO(Integer id, Integer trl, String chinese, String english, Integer sign) {
+        this.id = id;
+        this.trl = trl;
+        this.chinese = chinese;
+        this.english = english;
+        this.sign = sign;
     }
 
     public Integer getId() {
@@ -43,12 +42,12 @@ public class Word implements Serializable {
         this.id = id;
     }
 
-    public Integer getPid() {
-        return pid;
+    public Integer getTrl() {
+        return trl;
     }
 
-    public void setPid(Integer pid) {
-        this.pid = pid;
+    public void setTrl(Integer trl) {
+        this.trl = trl;
     }
 
     public String getChinese() {
@@ -77,9 +76,9 @@ public class Word implements Serializable {
 
     @Override
     public String toString() {
-        return "Word{" +
+        return "WordDO{" +
                 "id=" + id +
-                ", pid=" + pid +
+                ", trl=" + trl +
                 ", chinese='" + chinese + '\'' +
                 ", english='" + english + '\'' +
                 ", sign=" + sign +

@@ -5,7 +5,7 @@ spring :
 
 #服务器启动位置
 server :
-  port : 8088
+  port : 8000
 
 #logging configuration
 logging:
