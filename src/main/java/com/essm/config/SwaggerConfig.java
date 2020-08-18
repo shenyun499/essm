@@ -34,7 +34,7 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Swagger2")
-                .description("RESTful API接口")
+                .description("Restful API接口")
                 .version("1.0.1")
                 .build();
     }

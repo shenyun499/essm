@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.essm.mybatis.dao.WordDAO">
+
+    <resultMap id="resultMap" type="com.essm.entity.WordDO">
+        <result property="id" column="id"/>
+        <result property="trl" column="trl" />
+        <result property="chinese" column="chinese" />
+        <result property="english" column="english" />
+        <result property="sign" column="sign" />
+    </resultMap>
+
+    <sql id="table_columns">
+        `id`, `trl`, `chinese`, `english`, `sign`
+    </sql>
+
+    <select id="listWordInfo" parameterType="com.essm.entity.WordDO" resultMap="resultMap">
+        select <include refid="table_columns"/> from essm_word where id = #{id};
+    </select>
+</mapper>
